@@ -2,6 +2,6 @@
 	path = wet-boew-dist
 	url = https://github.com/wet-boew/wet-boew-dist
 [submodule "themes-dist"]
-	path = themes-dist
+	path = react-website/public/themes-dist
 	url = https://github.com/wet-boew/themes-dist
 	branch = GCWeb
