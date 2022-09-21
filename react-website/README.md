@@ -31,6 +31,14 @@
     ```sh
     nodeenv -p
     ```
+- Update to Latest npm Version
+    ```sh
+    npm install -g npm
+    ```
+- Install react Dependencies
+    ```sh
+    npm install
+    ```
 - Deactivating Virtual Env
     ```sh
     deactivate
@@ -62,6 +70,14 @@
 - Add node.js Virtual Env to Existing venv
     ```sh
     nodeenv -p
+    ```
+- Update to Latest npm Version
+    ```sh
+    npm install -g npm
+    ```
+- Install react Dependencies
+    ```sh
+    npm install
     ```
 - Deactivating Virtual Env
     ```sh
