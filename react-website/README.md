@@ -84,6 +84,17 @@
     deactivate
     ```
 
+## Submodules
+- Initialize submodule folders (if the folders appear empty when pulled/merged/etc.; either one, figure out which)
+    ```sh
+    git submodule init <path>
+    git submodule update --init
+    ```
+- Moving submodule folders (see: [git-mv](https://git-scm.com/docs/git-mv); main point is to update the .gitmodules file)
+    ```sh
+    git mv <path-to-file/folder> <path-to-new-directory>
+    ```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
