@@ -85,14 +85,9 @@
     ```
 
 ## Submodules
-- Initialize submodule folders (if the folders appear empty when pulled/merged/etc.; either one, figure out which)
+- Initialize submodule folders (if the folders appear empty when pulled/merged/etc.). **Execute command at top-level directory - the same directory that the .gitmodules file must be in.**
     ```sh
-    git submodule init <path>
     git submodule update --init
-    ```
-- Moving submodule folders (see: [git-mv](https://git-scm.com/docs/git-mv); main point is to update the .gitmodules file)
-    ```sh
-    git mv <path-to-file/folder> <path-to-new-directory>
     ```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
