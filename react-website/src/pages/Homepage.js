@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
+import {GreyBox} from './HomepageElements';
 
 function Homepage() {
 
     return (
         <>
-            
             <main property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement"> 
                 <Welcome />
                 <SubmitForm />
@@ -14,13 +14,12 @@ function Homepage() {
     )
   }
   
-  
-  
   //Grey box part
   function SubmitForm() {
     return (
         <>
-            <h2>Submit information by phone</h2>
+        <GreyBox>
+            <b><p>Submit information by phone</p></b>
             <p>Call 1-613-RESERVE (1-613-737-3783)<br/>
                Office hours from 8am to 6pm Eastern Time
             </p>
@@ -30,6 +29,7 @@ function Homepage() {
   
   
             <Link to="/" className="btn btn-primary">Submit Online</Link>
+            </GreyBox>
         </>
     )
   }
@@ -37,14 +37,15 @@ function Homepage() {
   function Welcome() {
     return (
     <>
-        <h1>Welcome to our Form App</h1>
+        <h1>Health Canada Form App</h1>
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-        sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Health Canada is the Federal department responsible for helping
+         Canadians maintain and improve their health, while respecting 
+         individual choices and circumstances.
+        </p>
+        <p>Welcome to our form app. This portal will take you to a form where 
+            you can fill out information about yourself, and save that data to
+             a database.
         </p>
     </>
      )      
