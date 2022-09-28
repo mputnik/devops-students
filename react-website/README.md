@@ -1,5 +1,11 @@
 # Getting Started with Create React App
 
+## git Submodules
+- Initialize submodule folders (if the folders appear empty when pulled/merged/etc.). **Execute command at top-level directory - the same directory that the .gitmodules file must be in.**
+    ```sh
+    git submodule update --init
+    ```
+
 ## Set Up Virtual Environment
 
 ### For MAC OS/Linux:
@@ -45,8 +51,24 @@
     ```
 
 ### For Windows 10/11:
-- Install pip
-    Automatically comes with Python if downloading from [python.org](https://www.python.org/).
+- Download & Install Python 3.10.7
+    - Click [this link](https://www.python.org/ftp/python/3.10.7/python-3.10.7-amd64.exe) to download Python 3.10.7 executable, the default installation should install pip on your Windows machine as well.
+    -  Add Python & pip to the PATH variable
+        1. Open the Run dialog box by pressing the Windows key + R.
+        2. Type in sysdm.cpl and press Enter to access System Properties.
+        3. Under the the Advanced tab click Environment Variables
+        4. Under User variables select Path and click Edit.
+        5. Click New and the following paths seperately:
+            ```sh
+            C:\Users\{YOUR_USER}\AppData\Local\Programs\Python\Python310
+            C:\Users\{YOUR_USER}\AppData\Local\Programs\Python\Python310\Scripts
+            ```
+        6. Under System variables select Path and click Edit
+        7. Click New and the following path:
+            ```sh
+            C:\Users\{YOUR_USER}\AppData\Local\Programs\Python\Python310
+            ```
+
 - Install virtualenv
     ```sh
     pip install virtualenv
@@ -82,12 +104,6 @@
 - Deactivating Virtual Env
     ```sh
     deactivate
-    ```
-
-## Submodules
-- Initialize submodule folders (if the folders appear empty when pulled/merged/etc.). **Execute command at top-level directory - the same directory that the .gitmodules file must be in.**
-    ```sh
-    git submodule update --init
     ```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -128,33 +144,3 @@ If you aren't satisfied with the build tool and configuration choices, you can `
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
