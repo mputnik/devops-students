@@ -1,9 +1,17 @@
-
+import { useNavigate } from 'react-router-dom'
 
 function Form () {
+    // Something something react's rule of hooks.
+    const navigate = useNavigate();
+    
+    function handleSubmit () {
+        // Potentially, code here for processing form data before POST to server/db.
+        navigate("/confirmation");
+    }
+
     return(
         <>
-            <form property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement">
+            <form onSubmit={handleSubmit} property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement">
                 <h1>Personal Information Form</h1>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12">
                     <label class="control-label required" for="Fname">First Name</label>
