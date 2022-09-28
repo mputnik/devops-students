@@ -28,7 +28,7 @@ function Homepage() {
             <p>For general information, please call the Health Canada information line at 1-888-773-8888</p>
   
   
-            <Link to="/" className="btn btn-primary">Submit Online</Link>
+            <Link to="/form" className="btn btn-primary">Submit Online</Link>
             </GreyBox>
         </>
     )
