@@ -1,13 +1,13 @@
 const CreateTable = ({ data, column }) => {
     return (
-        <table class="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
+        <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
             <thead>
             <tr>
-                {column.map((item) => <TableHeadItem item={item} />)}
+                {column.map((item, i) => <TableHeadItem item={item} key={i} />)}
             </tr>
             </thead>
             <tbody>
-                {data.map((item) => <TableRow item={item} column={column} />)}
+                {data.map((item, i) => <TableRow item={item} column={column} key={i} />)}
             </tbody>
         </table>
     )
@@ -16,12 +16,12 @@ const CreateTable = ({ data, column }) => {
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
 const TableRow = ({ item, column }) => (
-    <tr>
-        {column.map((columnItem) => {
-        return <td>{item[`${columnItem.value}`]}</td>
-        })}
-    </tr>
-    )
+  <tr>
+    {column.map((columnItem, i) => {
+      return <td key={i}>{item[`${columnItem.value}`]}</td>
+    })}
+  </tr>
+)
 
 function Table() {
     const tableData = require("../testData.json");
@@ -35,7 +35,7 @@ function Table() {
     ]
   
     return (
-      <div id="wb-bnr" class="container">
+      <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
         <CreateTable data={tableData} column={column} />
       </div>
