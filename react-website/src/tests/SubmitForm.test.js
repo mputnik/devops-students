@@ -1,8 +1,13 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, cleanup, screen } from "@testing-library/react";
 import { MemoryRouter as Router } from 'react-router-dom';
 import SubmitForm from "../pages/Homepage";
 
-//test block
+
+afterEach(() => {
+    cleanup();
+})
+
+
 test('Button test', () => {
     
     render(
