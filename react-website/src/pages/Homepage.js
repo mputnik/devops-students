@@ -5,7 +5,7 @@ function Homepage() {
 
     return (
         <>
-            <main property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement"> 
+            <main property="mainContentOfPage" className="container" resource="#wb-main" typeof="WebPageElement"> 
                 <Welcome />
                 <SubmitForm />
                 <br/><br/>
