@@ -22,7 +22,7 @@ app.use(express.json());
 app.listen(PORT, () => console.log(`Server on at http://localhost:${PORT}`));
 
 // async so you can explicitly state the awaits?
-app.get("/data/entry", cors(corsOptions), (req, res) => fget(req, res));
+app.get("/data/table", cors(corsOptions), (req, res) => fget(req, res));
 
 function fget (req, res) {
     // Change to extracting json array from database.

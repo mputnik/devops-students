@@ -41,7 +41,7 @@ function Table() {
           setData(JSON.parse(http.response));
         }
       }
-      http.open("GET", "http://localhost:8080/data/entry", true);   // true => async
+      http.open("GET", "http://localhost:8080/data/table", true);   // true => async
       http.send(null);
     }, [tableData]);
     
