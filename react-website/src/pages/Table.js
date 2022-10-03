@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 const CreateTable = ({ data, column }) => {
     return (
         <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
@@ -23,9 +25,26 @@ const TableRow = ({ item, column }) => (
   </tr>
 )
 
+// TODO: add componentDidMount to request db data, setState/re-render when data is retrieved.
 function Table() {
-    const tableData = require("../testData.json");
-  
+    // const tableData = require("../testData.json");
+
+    // Declare state variable.
+    const [tableData, setData] = useState([]);
+
+    // On load, send HTTP request to server.
+    // Fires twice because StrictMode (see index.js) renders components twice on dev. Should not be an issue in production.
+    useEffect(() => {
+      let http = new XMLHttpRequest();
+      http.onreadystatechange = () => {   // Set the function for when the response is sent back.
+        if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+          setData(JSON.parse(http.response));
+        }
+      }
+      http.open("GET", "http://localhost:8080/data/entry", true);   // true => async
+      http.send(null);
+    }, [tableData]);
+    
     const column = [
       { heading: 'First Name', value: 'firstName' },
       { heading: 'Last Name', value: 'lastName' },
@@ -38,6 +57,7 @@ function Table() {
       <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
         <CreateTable data={tableData} column={column} />
+        <br/><br/>
       </div>
     );
   }
