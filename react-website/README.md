@@ -112,6 +112,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm run dev'
+
+Runs both client and server applications in the same terminal using concurrently.
+Visit [http://localhost:3000](http://localhost:3000) to access client app.
+Visit [http://localhost:8080](http://localhost:8080) to access server app.
+
 ### `npm start`
 
 Runs the app in the development mode.\
