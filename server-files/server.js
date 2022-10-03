@@ -1,5 +1,6 @@
 // const { MongoClient } = require('mongodb');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const PORT = 8080;
 
@@ -9,32 +10,30 @@ const COLNAME = 'table';
 
 // const client = new MongoClient(URL);
 
+const corsOptions = {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: "Content-type",
+    optionsSuccessStatus: 200
+}
+
 app.use(express.json());
 
 app.listen(PORT, () => console.log(`Server on at http://localhost:${PORT}`));
 
 // async so you can explicitly state the awaits?
-app.get("/data/entry", (req, res) => fget(req, res));
+app.get("/data/entry", cors(corsOptions), (req, res) => fget(req, res));
 
 function fget (req, res) {
     // Change to extracting json array from database.
     const testobj = require("./testData.json");
-
-    res.set({
-        "Access-Control-Allow-Origin": "http://localhost:3000"
-    });
     res.json(testobj);
 }
 
-app.post("/data/entry", (req, res) => fpost(req, res));
+app.options("/data/entry", cors(corsOptions));
+app.post("/data/entry", cors(corsOptions), (req, res) => fpost(req, res));
 
 function fpost(req, res) {
-    const { firstName, lastName, favoriteColor, favoritePet, message } = req.body;
-    
-    console.log(message);
-
-    res.set({
-        "Access-Control-Allow-Origin": "http://localhost:3000"
-    });
+    console.log(req.body);
     res.sendStatus(200);
 }

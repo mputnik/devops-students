@@ -26,14 +26,15 @@ function Form () {
               }
             }
             http.open("POST", "http://localhost:8080/data/entry", true);   // true => async
-    
-            const body = {
+            http.setRequestHeader("Content-type", "application/json");
+
+            const body = JSON.stringify({
                 firstName: firstName,
                 lastName: lastName,
                 favoriteColor: favoriteColor,
                 favoritePet: favoritePet,
                 message: message
-            };
+            });
             http.send(body);
         }
     }
