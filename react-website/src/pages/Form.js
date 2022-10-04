@@ -72,7 +72,7 @@ function ErrorMsg() {
     return (
         <>
             <br/>
-            <label class="control-label required" for="Fname">
+            <label class="control-label" for="Fname">
             <strong id="title1-error" class="error"><span class="label label-danger"><span class="prefix">Error: </span>This field is required.</span></strong>
             </label>
         </>
