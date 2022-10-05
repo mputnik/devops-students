@@ -18,5 +18,7 @@ test('Button test', () => {
 
     const submitButton = screen.getByTestId('submitButton');
     expect(submitButton).toBeInTheDocument();
+    expect(submitButton).toHaveTextContent('submitButton');
+    expect(submitButton).toContainHTML('</Link>');
 
 });
