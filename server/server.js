@@ -25,15 +25,6 @@ mongoose.connection.on('connected', () => {
     console.log('Connection to mongodb database established successfully.')
 });
 
-// const newFormPost = new FormPost(data); // creating an instance of the model
-// newFormPost.save((error) => {
-//     if (error) {
-//         console.log(`Could not save data to mongodb database ${error.message}`);
-//     }else{
-//         console.log('Data successfuly saved to mongodb database');
-//     }
-// });
-
 // Automatic HTTP request logger
 app.use(morgan('combined'));
 

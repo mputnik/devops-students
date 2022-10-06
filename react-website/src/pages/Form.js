@@ -1,10 +1,7 @@
-import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import axios from 'axios'
 
 function Form () {
-    // Something something react's rule of hooks.
-    const navigate = useNavigate();
-
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [favoriteColor, setFavColor] = useState("");
@@ -17,25 +14,26 @@ function Form () {
         if (firstName === "" || lastName === "" || favoriteColor === "") {
             alert(`Missing fields: ${firstName ? "" : "First Name, "}${lastName ? "" : "Last Name, "}${favoriteColor ? "":"Colour"}`);
         } else {
-            // Potentially, code here for processing form data before POST to server/db.
-            let http = new XMLHttpRequest();
-            http.onreadystatechange = () => {   // Set the function for when the response is sent back.
-              if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                console.log(http.response);
-                navigate("/confirmation");
-              }
-            }
-            http.open("POST", "http://localhost:8080/data/entry", true);   // true => async
-            http.setRequestHeader("Content-type", "application/json");
-
-            const body = JSON.stringify({
+            const body = {
                 firstName: firstName,
                 lastName: lastName,
                 favoriteColor: favoriteColor,
                 favoritePet: favoritePet,
                 message: message
-            });
-            http.send(body);
+            };
+
+            axios({
+                url: 'http://localhost:8080/api/save',
+                method: 'POST',
+                data: body
+            })
+                .then(()=>{
+                    console.log('The form data was successfuly sent to the server')
+                })
+                .catch(()=>{
+                    console.log('Internal server error: could not send form data to the server')
+                });
+
         }
     }
 
