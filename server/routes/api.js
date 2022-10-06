@@ -7,13 +7,12 @@ router.get('/', (req, res) =>{
     const data = {}; 
     FormPost.find({})
         .then((data) => {
-            console.log(data);
+            console.log('data received');
+            res.json(data)
         })
         .catch((error) =>{
             console.log('Could not retrieve data from mongodb database.');
         });
-
-    res.json(data)
 })
 
 router.post('/save', (req, res) =>{

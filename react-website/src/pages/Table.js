@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const CreateTable = ({ data, column }) => {
     return (
@@ -25,25 +26,22 @@ const TableRow = ({ item, column }) => (
   </tr>
 )
 
-// TODO: add componentDidMount to request db data, setState/re-render when data is retrieved.
 function Table() {
-    // const tableData = require("../testData.json");
-
     // Declare state variable.
     const [tableData, setData] = useState([]);
 
     // On load, send HTTP request to server.
     // Fires twice because StrictMode (see index.js) renders components twice on dev. Should not be an issue in production.
     useEffect(() => {
-      let http = new XMLHttpRequest();
-      http.onreadystatechange = () => {   // Set the function for when the response is sent back.
-        if (http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-          setData(JSON.parse(http.response));
-        }
-      }
-      http.open("GET", "http://localhost:8080/data/table", true);   // true => async
-      http.send(null);
-    }, [tableData]);
+      axios.get('/api')
+        .then((response) =>{
+          setData(response.data);
+        })
+        .catch((error) => {
+          alert(`Error: ${error.message}`)
+        })
+    // Keep the empty array.
+    }, []);
     
     const column = [
       { heading: 'First Name', value: 'firstName' },
