@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
 const CreateTable = ({ data, column }) => {
     return (
         <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
@@ -24,8 +27,22 @@ const TableRow = ({ item, column }) => (
 )
 
 function Table() {
-    const tableData = require("../testData.json");
-  
+    // Declare state variable.
+    const [tableData, setData] = useState([]);
+
+    // On load, send HTTP request to server.
+    // Fires twice because StrictMode (see index.js) renders components twice on dev. Should not be an issue in production.
+    useEffect(() => {
+      axios.get('/api')
+        .then((response) =>{
+          setData(response.data);
+        })
+        .catch((error) => {
+          alert(`Error: ${error.message}`)
+        })
+    // Keep the empty array.
+    }, []);
+    
     const column = [
       { heading: 'First Name', value: 'firstName' },
       { heading: 'Last Name', value: 'lastName' },
@@ -38,6 +55,7 @@ function Table() {
       <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
         <CreateTable data={tableData} column={column} />
+        <br/><br/>
       </div>
     );
   }
