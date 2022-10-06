@@ -25,6 +25,10 @@ mongoose.connection.on('connected', () => {
     console.log('Connection to mongodb database established successfully.')
 });
 
+// Making all the requests available as json or urlencoded
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 // Automatic HTTP request logger
 app.use(morgan('combined'));
 
