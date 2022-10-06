@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node server.js",
+    "server": "cd ../server/ && node server.js",
     "client": "cd ../react-website && npm start",
     "dev": "concurrently -n server,client -c red,green  \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
