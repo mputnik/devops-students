@@ -52,7 +52,7 @@ function Form () {
 
     return(
         <>
-            <form id='form' onSubmit={(e) => HandleSubmit(e)} property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement">
+            <form id='form' onSubmit={(e) => handleSubmit(e)} property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement">
                 <h1>Personal Information Form</h1>
                 <div data-testid={'FnameInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
                     <label className="control-label required" htmlFor="Fname">First Name <strong class="required">(required)</strong></label>
