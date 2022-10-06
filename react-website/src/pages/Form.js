@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function Form () {
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [favoriteColor, setFavColor] = useState("");
@@ -29,10 +31,11 @@ function Form () {
                 data: body
             })
                 .then(()=>{
-                    console.log('The form data was successfuly sent to the server')
+                    navigate("/confirmation");
+                    console.log('The form data was successfuly sent to the server');
                 })
-                .catch(()=>{
-                    console.log('Internal server error: could not send form data to the server')
+                .catch((error)=>{
+                    console.log('Internal server error: could not send form data to the server');
                 });
 
         }
