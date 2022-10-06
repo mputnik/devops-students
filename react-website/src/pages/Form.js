@@ -23,7 +23,8 @@ function Form () {
             };
 
             axios({
-                url: 'http://localhost:8080/api/save',
+                // Full url defined in as proxy in package.json 
+                url: '/api/save',
                 method: 'POST',
                 data: body
             })
