@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Import routes
-const routes = require('./routes/api');
+const routes = require('../react-website/routes/api');
 
 // Establish connection to mongodb database
 mongoose.connect('mongodb://0.0.0.0:27017/form_data', {
