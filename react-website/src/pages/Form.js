@@ -52,26 +52,26 @@ function Form () {
 
     return(
         <>
-            <form id='form' onSubmit={(e) => handleSubmit(e)} property="mainContentOfPage" class="container" resource="#wb-main" typeof="WebPageElement">
+            <form id='form' onSubmit={(e) => handleSubmit(e)} property="mainContentOfPage" className="container" resource="#wb-main" typeof="WebPageElement">
                 <h1>Personal Information Form</h1>
                 <div data-testid={'FnameInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Fname">First Name <strong class="required">(required)</strong></label>
-                    {firstNameErr && <ErrorMsg />}
+                    <label className="control-label required" htmlFor="Fname">First Name <strong className="required">(required)</strong></label>
+                    {firstNameErr && <ErrorMsg for="Fname"/>}
                     <input type="text" className="form-control" id="Fname" size="40" placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                 </div>
                 <div data-testid={'LnameInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Lname">Last Name <strong class="required">(required)</strong></label>
-                    {lastNameErr && <ErrorMsg />}
+                    <label className="control-label required" htmlFor="Lname">Last Name <strong className="required">(required)</strong></label>
+                    {lastNameErr && <ErrorMsg for="Lname"/>}
                     <input type="text" className="form-control" id="Lname" size="40" placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                 </div>
                 <div data-testid={'ColourInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Colour">Colour <strong class="required">(required)</strong></label>
-                    {colourErr && <ErrorMsg />}
+                    <label className="control-label required" htmlFor="Colour">Colour <strong className="required">(required)</strong></label>
+                    {colourErr && <ErrorMsg for="Colour"/>}
                     <input type="text" className="form-control" id="Colour" size="40" placeholder="Red" value={favoriteColor} onChange={(e) => setFavColor(e.target.value)}/>
                 </div>
                 <div data-testid={'PetSelect'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Pet">Pet Preference <strong class="required">(required)</strong></label>
-                    {petErr && <ErrorMsg />}
+                    <label className="control-label required" htmlFor="Pet">Pet Preference <strong className="required">(required)</strong></label>
+                    {petErr && <ErrorMsg for="Pet"/>}
                     <select className="form-control" id="Pet" value={favoritePet} onChange={(e) => setFavPet(e.target.value)}>
                         <option value=""></option>
                         <option>Dog</option>
@@ -90,12 +90,12 @@ function Form () {
         </>
     )
 }
-function ErrorMsg() {
+function ErrorMsg(props) {
     return (
         <>
             <br/>
-            <label class="control-label" for="Fname">
-            <strong id="title1-error" class="error"><span class="label label-danger"><span class="prefix">Error: </span>This field is required.</span></strong>
+            <label className="control-label" htmlFor={props.for}>
+            <strong id="title1-error" className="error"><span className="label label-danger"><span className="prefix">Error: </span>This field is required.</span></strong>
             </label>
         </>
     )
