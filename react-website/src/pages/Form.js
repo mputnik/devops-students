@@ -24,7 +24,7 @@ function Form () {
         setColourErr(favoriteColor === "");
         setPetErr(favoritePet === "");
 
-        if(firstName.value !== "" && lastName.value !== "" && colour.value !== "" && pet.value !== ""){
+        if(firstName !== "" && lastName !== "" && favoriteColor !== "" && favoritePet !== ""){
             const body = {
                 firstName: firstName,
                 lastName: lastName,
