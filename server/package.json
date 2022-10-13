@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server.js",
+    "server": "node main.js",
     "client": "cd ../react-website && npm start",
     "dev": "concurrently -n server,client -c red,green  \"npm run server\" \"npm run client\""
   },
