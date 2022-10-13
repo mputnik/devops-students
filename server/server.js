@@ -1,8 +1,11 @@
 module.exports = function(dbName) {
+    let server = {};
+
     // Import npm packages
     const express = require('express');
     const mongoose = require('mongoose');
     const morgan = require('morgan');
+    const FormPost = require('./models/FormPost');
     // built in node.js module
     // const path = require('path');
 
@@ -36,7 +39,19 @@ module.exports = function(dbName) {
     // register routes
     app.use('/api', routes);
 
+    server.app = app;
+
+    server.drop = function() {
+        FormPost.deleteMany({}, (err) => {
+            console.error(`Error: ${err}`);
+        });
+    };
+
+    server.close = function() {
+        mongoose.connection.close();
+    }
+
     // app.listen(PORT, console.log(`Server starting at port ${PORT}`))
 
-    return app;
+    return server;
 }
