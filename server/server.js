@@ -41,12 +41,39 @@ module.exports = function(dbName) {
 
     server.app = app;
 
-    server.drop = function() {
-        FormPost.deleteMany();
+    // Functions for testing purposes.
+    server.add = function (data) {
+        const newData = new FormPost(data);
+        newData.save((err) => {
+            if (err) {
+                console.error(`Could not save data to mongodb.\nError: ${err}`);
+            }
+        });
+    };
+
+    // server.get = function() {
+    //     let data;
+    //     FormPost.find({})
+    //         .then((rawData) => {
+    //             return data = rawData.map((obj) => ({
+    //                 firstName: obj.firstName,
+    //                 lastName: obj.lastName,
+    //                 favoritePet: obj.favoritePet,
+    //                 favoriteColor: obj.favoriteColor,
+    //                 message: obj.message
+    //             }));
+
+    //             // console.log(rawData);
+    //             // return JSON.stringify(data);
+    //         });
+    // }
+
+    server.drop = async function() {
+        await FormPost.deleteMany();
     };
 
     server.close = function() {
-        mongoose.connection.close();
+        mongoose.connection.close(false);
     }
 
     // app.listen(PORT, console.log(`Server starting at port ${PORT}`))
