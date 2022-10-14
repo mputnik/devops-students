@@ -7,7 +7,7 @@ describe("Test API and database", () => {
             .get('/api')
             .set('Accept', 'application/json')
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .expect(200, [{}], done);
+            .expect(200, [], done);
     });
 
     it("processes GET non-empty", (done) => {

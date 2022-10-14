@@ -42,9 +42,7 @@ module.exports = function(dbName) {
     server.app = app;
 
     server.drop = function() {
-        FormPost.deleteMany({}, (err) => {
-            console.error(`Error: ${err}`);
-        });
+        FormPost.deleteMany();
     };
 
     server.close = function() {
