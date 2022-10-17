@@ -6,9 +6,6 @@ WORKDIR /home/app
 
 COPY . /home/app
 
-RUN mkdir -p /home/app/themes-dist
-RUN mkdir -p /home/app/wet-boew-dist
-
 RUN npm install
 
 EXPOSE 8080
