@@ -3,11 +3,26 @@ const mongoose = require('mongoose');
 // mongodb schema
 const Schema = mongoose.Schema;
 const FormPostSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    favoritePet: String,
-    favoriteColor: String,
-    message: String
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    favoritePet: {
+        type: String,
+        required: true
+    },
+    favoriteColor: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    }
 });
 
 // register a Model by passing schema
