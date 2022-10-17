@@ -14,7 +14,7 @@ module.exports = function(dbName) {
     const routes = require('./routes/api');
 
     // Establish connection to mongodb database
-    mongoose.connect(`mongodb://0.0.0.0:27017/${dbName}`, {
+    mongoose.connect(`mongodb://database:27017/${dbName}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
