@@ -52,7 +52,7 @@ module.exports = function(dbName) {
 
     server.close = function() {
         mongoose.connection.close(false);
-    }
+    };
 
     return server;
 }
