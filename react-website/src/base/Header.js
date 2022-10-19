@@ -47,7 +47,8 @@ function Header() {
                     <ul role="menu" aria-orientation="vertical">
                     <li role="presentation"><Link to="/" role="menuitem">Home</Link></li>
                     <li role="presentation"><Link to="/form" role="menuitem">Submit a form</Link></li>
-                    <li role="presentation"><a role="menuitem" href="http://localhost:3000/data">View submissions table</a></li>
+                    {/* Ideally, the href below should adapt to the proxy's domain, either dynamically or during build/deployment? */}
+                    <li role="presentation"><a role="menuitem" href="http://localhost:4000/data">View submissions table</a></li>
                     </ul>
                 </div>
                 </nav>

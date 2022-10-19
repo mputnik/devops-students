@@ -8,6 +8,6 @@ COPY . /home/app
 
 RUN npm install
 
-EXPOSE 8080
+EXPOSE 8080/tcp
 
 CMD ["node","main.js"]
