@@ -21,7 +21,7 @@ const FormPostSchema = new Schema({
     },
     message: {
         type: String,
-        required: true
+        required: false
     }
 });
 
