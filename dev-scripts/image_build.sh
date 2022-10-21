@@ -7,4 +7,4 @@ sudo docker build -t api .
 cd ../proxy/
 sudo docker build -t proxy .
 cd ..
-sudo docker run -d --network=dnet -p 27017:27017 --name database mongo:latest
+sudo docker run -d --network=dnet --name database mongo:latest
