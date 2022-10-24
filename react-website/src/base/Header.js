@@ -45,10 +45,12 @@ function Header() {
                     <h2 className="wb-inv">Menu</h2>
                     <button type="button" aria-haspopup="true" aria-expanded="false"><span className="wb-inv">Main </span>Menu <span className="expicon glyphicon glyphicon-chevron-down"></span></button>
                     <ul role="menu" aria-orientation="vertical">
-                    <li role="presentation"><Link to="/" role="menuitem">Home</Link></li>
-                    <li role="presentation"><Link to="/form" role="menuitem">Submit a form</Link></li>
-                    <li role="presentation"><a role="menuitem" href="http://localhost:3000/data">View submissions table</a></li>
+                        <li role="presentation"><Link to="/" role="menuitem">Home</Link></li>
+                        <li role="presentation"><Link to="/form" role="menuitem">Submit a form</Link></li>
+                        <li role="presentation"><a role="menuitem" href="http://localhost:3000/data">View submissions table</a></li>
+                        <li role="presentation"><Link to="/admin-sign-in" role="menuitem">Admin sign in</Link></li>
                     </ul>
+                    <Link to="/admin-sign-in" className="btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</Link>
                 </div>
                 </nav>
                 <nav id="wb-bc" property="breadcrumb">
