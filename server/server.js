@@ -6,6 +6,7 @@ module.exports = function(dbName) {
     const mongoose = require('mongoose');
     const morgan = require('morgan');
     const FormPost = require('./models/FormPost');
+    const Admin = require('./models/Admin');
 
     // Initialize express application
     const app = express();
@@ -53,6 +54,14 @@ module.exports = function(dbName) {
     server.close = function() {
         mongoose.connection.close(false);
     };
+
+    // For development. Eventually, may need to remove in deployment/production.
+    server.initAdmin = function () {
+        const newAdmin = new Admin({ username: "admin", password: "admin" });
+        newAdmin.save((err) => {
+            if (err) console.error(`Could not add new admin.\nError: ${err}`);
+        });
+    }
 
     return server;
 }
