@@ -35,7 +35,7 @@ router.post('/save', (req, res) =>{
             res.status(400).json({ msg: "Failed to save your data." });
         }else{
             console.log('Data successfuly saved to mongodb database');
-            res.status(200).json({ msg: 'We received your data!' })
+            res.status(201).json({ msg: 'We received your data!' });
         }
     });
     

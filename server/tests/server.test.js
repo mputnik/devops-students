@@ -53,7 +53,7 @@ describe("Test API and database", () => {
             .send(testInput)
             .set('Accept', 'application/json')
             .expect('Content-Type', 'application/json; charset=utf-8')
-            .expect(200, { msg: 'We received your data!' }, done);
+            .expect(201, { msg: 'We received your data!' }, done);
     });
 
     test("pass POST with incorrect schema", (done) => {
