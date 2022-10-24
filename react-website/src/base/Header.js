@@ -48,9 +48,9 @@ function Header() {
                         <li role="presentation"><Link to="/" role="menuitem">Home</Link></li>
                         <li role="presentation"><Link to="/form" role="menuitem">Submit a form</Link></li>
                         <li role="presentation"><a role="menuitem" href="http://localhost:3000/data">View submissions table</a></li>
-                        <li role="presentation"><Link to="/admin-sign-in" role="menuitem">Admin sign in</Link></li>
+                        <li role="presentation"><a role="menuitem" href="/admin-sign-in">Admin sign in</a></li>
                     </ul>
-                    <Link to="/admin-sign-in" className="btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</Link>
+                    <a href="/admin-sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a>
                 </div>
                 </nav>
                 <nav id="wb-bc" property="breadcrumb">
