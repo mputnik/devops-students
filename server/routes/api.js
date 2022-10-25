@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const router = express.Router();
 const FormPost = require('../models/FormPost');
 const Admin = require('../models/Admin');
@@ -46,11 +48,21 @@ router.post('/admin/login', (req, res) => {
     const creds = req.body;
     
     Admin.find({ username: creds.username })
-        .then((dbcreds) => {
-            // Add whatever encryption/decryption here.
-            if (dbcreds.password === creds.password) {
+        .then(async (dbcreds) => {
+            const passwordCorrect = await bcrypt.compare(creds.password, dbcreds.password);
+
+            if (passwordCorrect) {
                 // Send auth token back.
-                res.status(200).json({});
+                
+                const userForToken = {
+                    username: creds.username
+                }
+
+                const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
+                
+                res
+                    .status(200).json({})
+                    .send({ token, username: creds.username })
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
             }
