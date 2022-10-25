@@ -13,7 +13,8 @@ router.get('/', (req, res) =>{
                 lastName: obj.lastName,
                 favoritePet: obj.favoritePet,
                 favoriteColor: obj.favoriteColor,
-                message: obj.message
+                message: obj.message,
+                _id: obj._id
             }));
 
             res.status(200).json(data)

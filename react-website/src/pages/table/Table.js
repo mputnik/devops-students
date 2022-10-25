@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const CreateTable = ({ data, column }) => {
+const CreateTable = ({ data, column, ObjectId }) => {
     return (
         <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
             <thead>
@@ -10,7 +10,7 @@ const CreateTable = ({ data, column }) => {
             </tr>
             </thead>
             <tbody>
-                {data.map((item, i) => <TableRow item={item} column={column} key={i} />)}
+                {data.map((item, i) => <TableRow item={item} column={column} ObjectId={ObjectId} key={i} />)}
             </tbody>
         </table>
     )
@@ -18,8 +18,8 @@ const CreateTable = ({ data, column }) => {
   
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
-const TableRow = ({ item, column }) => (
-  <tr>
+const TableRow = ({ item, column, ObjectId}) => (
+  <tr id={item[`${ObjectId}`]}>
     {column.map((columnItem, i) => {
       return <td key={i}>{item[`${columnItem.value}`]}</td>
     })}
@@ -43,18 +43,20 @@ function Table() {
     // Keep the empty array.
     }, []);
     
+    const ObjectId = '_id';
+
     const column = [
       { heading: 'First Name', value: 'firstName' },
       { heading: 'Last Name', value: 'lastName' },
       { heading: 'Favorite Pet', value: 'favoritePet' },
       { heading: 'Favorite Color', value: 'favoriteColor' },
       { heading: 'Message', value: 'message' },
-    ]
+    ];
   
     return (
       <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
-        <CreateTable data={tableData} column={column} />
+        <CreateTable data={tableData} column={column } ObjectId={ObjectId} />
         <br/><br/>
       </div>
     );
