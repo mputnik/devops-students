@@ -47,9 +47,9 @@ router.post('/save', (req, res) =>{
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
     
-    Admin.find({ username: creds.username })
+    Admin.findOne({ username: creds.username })
         .then(async (dbcreds) => {
-            const passwordCorrect = await bcrypt.compare(creds.password, dbcreds.password);
+            const passwordCorrect = await bcrypt.compare(creds.password, dbcreds.password)
 
             if (passwordCorrect) {
                 // Send auth token back.
@@ -61,8 +61,8 @@ router.post('/admin/login', (req, res) => {
                 const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
                 
                 res
-                    .status(200).json({})
-                    .send({ token, username: creds.username })
+                    .status(200).json({ token, username: creds.username })
+                    //.send({ token, username: creds.username })
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
             }
