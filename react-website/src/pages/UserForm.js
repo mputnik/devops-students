@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import FormBase from '../base/FormBase';
-    
-function AdminForm (props) {
+
+function UserForm () {
     const navigate = useNavigate();
     
     const [firstName, setFirstName] = useState("");
@@ -17,24 +17,9 @@ function AdminForm (props) {
     const [colourErr, setColourErr] = useState(false);
     const [petErr, setPetErr] = useState(false);
     
-    // On load, send HTTP request to server.
-    // Fires twice because StrictMode (see index.js) renders components twice on dev. Should not be an issue in production.
-    useEffect(() => {
-        axios.get(`/api/search/${props.docId}`)
-          .then((response) =>{
-            setFirstName(response.data.firstName);
-            setLastName(response.data.lastName);
-            setFavColor(response.data.favoriteColor);
-            setFavPet(response.data.favoritePet);
-            setMessage(response.data.message);
-          })
-          .catch((error) => {
-            alert(`Error: ${error.message}`)
-          });
-    // Keep the empty array.
-    }, [props.docId]);
-    
-    function editDocument () {
+    function handleSubmit (event) {
+        event.preventDefault();
+        
         setFirstNameErr(firstName === "");
         setLastNameErr(lastName === "");
         setColourErr(favoriteColor === "");
@@ -51,41 +36,26 @@ function AdminForm (props) {
 
             axios({
                 // Full url defined in as proxy in package.json 
-                // TODO: update url when route is decided.
-                url: `/api/.../${props.docId}`,
-                method: 'PUT',
+                url: '/api/save',
+                method: 'POST',
                 data: body
             })
                 .then(()=>{
-                    navigate("/data");
+                    navigate("/confirmation");
                     console.log('The form data was successfuly sent to the server');
                 })
                 .catch((error)=>{
-                    console.log(`Internal server error: could not send form data to the server.\nError: ${error.message}`);
+                    console.log('Internal server error: could not send form data to the server');
                 });
         }
 
     }
 
-    function deleteDocument() {
-        axios({
-            // TODO: update url when route is decided.
-            url: `/api/.../${props.docId}`,
-            method: 'DELETE'
-        })
-            .then(() => {
-                console.log("The document was successfully deleted from the database.");
-                navigate("/data");
-            })
-            .catch((error) => {
-                console.log(`Deletion failed.\nError: ${error.message}`);
-            });
-    }
-
     return(
         <>
             <FormBase
-                title={`Edit Form Entry ID: ${props.docId}`}
+                handleSubmit={handleSubmit}
+                title="Personal Information Form"
                 firstName={firstName} setFirstName={setFirstName}
                 lastName={lastName} setLastName={setLastName}
                 favoriteColor={favoriteColor} setFavColor={setFavColor}
@@ -96,12 +66,11 @@ function AdminForm (props) {
                 colourErr={colourErr}
                 petErr={petErr}
             >
-                <button type="button" className="btn btn-default" onClick={() => editDocument()}>Save Changes</button>
-                <span>{/* For spacing */}  </span>
-                <button type="button" className="btn btn-danger" onClick={() => deleteDocument()}>Delete</button>
+                <button type="submit" className="btn btn-default">Submit</button>
             </FormBase>
         </>
     )
 }
 
-export default AdminForm;
+
+export default UserForm;
