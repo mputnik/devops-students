@@ -55,6 +55,18 @@ router.get('/search/:id', (req, res) => {
         });
 })
 
+router.get('/admin/delete/:id', (req, res) =>{
+    const id = req.params.id;
+    FormPost.findByIdAndDelete(`${id}`)
+        .then((rawData) => {
+            console.log(rawData);
+            res.status(201).json({ msg: `id ${id} data successfuly deleted from to mongodb database` });
+        })
+        .catch((error) =>{
+            res.status(404).json({ message: `Query failed. Could not delete data from mongodb database.\nError: ${error}` });
+        });
+})
+
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
