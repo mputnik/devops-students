@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import FormBase from '../base/FormBase';
     
 function AdminForm (props) {
-    const navigate = useNavigate();
-    
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [favoriteColor, setFavColor] = useState("");
@@ -52,12 +49,12 @@ function AdminForm (props) {
             axios({
                 // Full url defined in as proxy in package.json 
                 // TODO: update url when route is decided.
-                url: `/api/.../${props.docId}`,
+                url: `/api/admin/edit/${props.docId}`,
                 method: 'PUT',
                 data: body
             })
                 .then(()=>{
-                    navigate("/data");
+                    window.location.href = '/data';
                     console.log('The form data was successfuly sent to the server');
                 })
                 .catch((error)=>{
@@ -70,12 +67,12 @@ function AdminForm (props) {
     function deleteDocument() {
         axios({
             // TODO: update url when route is decided.
-            url: `/api/.../${props.docId}`,
+            url: `/api/admin/delete/${props.docId}`,
             method: 'DELETE'
         })
             .then(() => {
                 console.log("The document was successfully deleted from the database.");
-                navigate("/data");
+                window.location.href = '/data';
             })
             .catch((error) => {
                 console.log(`Deletion failed.\nError: ${error.message}`);

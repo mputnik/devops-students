@@ -55,7 +55,7 @@ router.get('/search/:id', (req, res) => {
         });
 })
 
-router.get('/admin/delete/:id', (req, res) =>{
+router.delete('/admin/delete/:id', (req, res) =>{
     const id = req.params.id;
     FormPost.findByIdAndDelete(`${id}`)
         .then((rawData) => {
@@ -67,14 +67,14 @@ router.get('/admin/delete/:id', (req, res) =>{
         });
 })
 
-router.post('/admin/edit/:id', (req, res) => {
+router.put('/admin/edit/:id', (req, res) => {
     const id = req.params.id;
     const newdata = req.body;
     
     FormPost.findByIdAndUpdate(`${id}`, 
                                 {$set:{firstName: newdata.firstName, lastName: newdata.lastName,
                                 favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
-                                message: newdata.favoriteColor}}, {new: true})
+                                message: newdata.message}}, {new: true})
         .then(() => {
             res.status(200).json({ msg: `id ${id} data successfuly updated` });
         })
