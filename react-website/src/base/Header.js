@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 function Header() {
     return (
         <div>
@@ -45,11 +43,12 @@ function Header() {
                     <h2 className="wb-inv">Menu</h2>
                     <button type="button" aria-haspopup="true" aria-expanded="false"><span className="wb-inv">Main </span>Menu <span className="expicon glyphicon glyphicon-chevron-down"></span></button>
                     <ul role="menu" aria-orientation="vertical">
-                    <li role="presentation"><Link to="/" role="menuitem">Home</Link></li>
-                    <li role="presentation"><Link to="/form" role="menuitem">Submit a form</Link></li>
-                    {/* Ideally, the href below should adapt to the proxy's domain, either dynamically or during build/deployment? */}
-                    <li role="presentation"><a role="menuitem" href="http://localhost:4000/data">View submissions table</a></li>
+                        <li role="presentation"><a role="menuitem" href="/">Home</a></li>
+                        <li role="presentation"><a role="menuitem" href="/form">Submit a form</a></li>
+                        <li role="presentation"><a role="menuitem" href="/data">View submissions table</a></li>
+                        <li role="presentation"><a role="menuitem" href="/admin-sign-in">Admin sign in</a></li>
                     </ul>
+                    <a href="/admin-sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a>
                 </div>
                 </nav>
                 <nav id="wb-bc" property="breadcrumb">
