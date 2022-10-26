@@ -18,13 +18,21 @@ const CreateTable = ({ data, column }) => {
   
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
-const TableRow = ({ item, column }) => (
-  <tr>
-    {column.map((columnItem, i) => {
-      return <td key={i}>{item[`${columnItem.value}`]}</td>
-    })}
-  </tr>
-)
+const TableRow = ({ item, column }) => {
+  const auth = true;
+
+  return (
+    <tr type="button" onClick={auth ? () => rowClick(item._id) : null}>
+      {column.map((columnItem, i) => {
+        return <td key={i}>{item[`${columnItem.value}`]}</td>
+      })}
+    </tr>
+  );
+};
+
+function rowClick (docId) {
+  alert(docId);
+}
 
 function Table() {
     // Declare state variable.
@@ -49,7 +57,7 @@ function Table() {
       { heading: 'Favorite Pet', value: 'favoritePet' },
       { heading: 'Favorite Color', value: 'favoriteColor' },
       { heading: 'Message', value: 'message' },
-    ]
+    ];
   
     return (
       <div id="wb-bnr" className="container">
@@ -58,6 +66,6 @@ function Table() {
         <br/><br/>
       </div>
     );
-  }
+}
 
 export default Table;
