@@ -67,6 +67,22 @@ router.get('/admin/delete/:id', (req, res) =>{
         });
 })
 
+router.post('/admin/edit/:id', (req, res) => {
+    const id = req.params.id;
+    const newdata = req.body;
+    
+    FormPost.findByIdAndUpdate(`${id}`, 
+                                {$set:{firstName: newdata.firstName, lastName: newdata.lastName,
+                                favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
+                                message: newdata.favoriteColor}}, {new: true})
+        .then(() => {
+            res.status(200).json({ msg: `id ${id} data successfuly updated` });
+        })
+        .catch((error) => {
+            res.status(404).json({ message: `Could not update data.\nError: ${error}` });
+        });
+})
+
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
