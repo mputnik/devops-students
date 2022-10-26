@@ -25,6 +25,9 @@ module.exports = function(dbName) {
         console.log('Connection to mongodb database established successfully.')
     });
 
+    // enable mongoose debugger to show query operations
+    mongoose.set('debug', true);
+
     // Making all the requests available as json or urlencoded
     app.use(express.json());
     app.use(express.urlencoded({extended: false}));

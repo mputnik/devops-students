@@ -42,6 +42,19 @@ router.post('/save', (req, res) =>{
     
 })
 
+// dynamic routes use ':' to indicate url params
+router.get('/search/:id', (req, res) => {
+    const id = req.params.id;
+    FormPost.findById(`${id}`)
+        .then((rawData) => {
+            console.log('data received');
+            res.status(200).json(rawData);
+        })
+        .catch((error) =>{
+            console.log(`Could not retrieve data from mongodb database.\n${error.message})`);
+        });
+})
+
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
