@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom';
 
 const CreateTable = ({ data, column, ObjectId }) => {
     return (
@@ -19,12 +20,16 @@ const CreateTable = ({ data, column, ObjectId }) => {
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
 const TableRow = ({ item, column, ObjectId}) => (
-  <tr id={item[`${ObjectId}`]}>
+  <tr id={item[`${ObjectId}`]} type="button" onClick={() => myFunction()}>
     {column.map((columnItem, i) => {
       return <td key={i}>{item[`${columnItem.value}`]}</td>
     })}
   </tr>
 )
+
+function myFunction() {
+  alert("Hello World!");
+}
 
 function Table() {
     // Declare state variable.
@@ -42,7 +47,7 @@ function Table() {
         })
     // Keep the empty array.
     }, []);
-    
+
     const ObjectId = '_id';
 
     const column = [
