@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import FormBase from '../base/FormBase';
 
-function Form () {
+function UserForm () {
     const navigate = useNavigate();
     
     const [firstName, setFirstName] = useState("");
@@ -73,4 +73,4 @@ function Form () {
 }
 
 
-export default Form;
+export default UserForm;
