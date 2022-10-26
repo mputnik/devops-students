@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-const CreateTable = ({ data, column }) => {
+const CreateTable = ({ data, column, setDocId }) => {
     return (
         <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
             <thead>
@@ -10,7 +11,7 @@ const CreateTable = ({ data, column }) => {
             </tr>
             </thead>
             <tbody>
-                {data.map((item, i) => <TableRow item={item} column={column} key={i} />)}
+                {data.map((item, i) => <TableRow item={item} column={column} setDocId={setDocId} key={i} />)}
             </tbody>
         </table>
     )
@@ -18,7 +19,15 @@ const CreateTable = ({ data, column }) => {
   
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
-const TableRow = ({ item, column }) => {
+const TableRow = ({ item, column, setDocId }) => {
+  const navigate = useNavigate();
+
+  function rowClick (docId) {
+    setDocId(docId);
+    navigate('/admin-form')
+  }
+
+  // Replace with authentication token check.
   const auth = true;
 
   return (
@@ -30,11 +39,7 @@ const TableRow = ({ item, column }) => {
   );
 };
 
-function rowClick (docId) {
-  alert(docId);
-}
-
-function Table() {
+function Table(props) {
     // Declare state variable.
     const [tableData, setData] = useState([]);
 
@@ -62,7 +67,7 @@ function Table() {
     return (
       <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
-        <CreateTable data={tableData} column={column} />
+        <CreateTable data={tableData} column={column} setDocId={props.setDocId} />
         <br/><br/>
       </div>
     );
