@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import FormBase from '../base/FormBase';
     
 function AdminForm (props) {
     const navigate = useNavigate();
@@ -70,8 +71,7 @@ function AdminForm (props) {
         axios({
             // TODO: update url when route is decided.
             url: `/api/.../${props.docId}`,
-            method: 'DELETE',
-            data: { _id: props.docId }
+            method: 'DELETE'
         })
             .then(() => {
                 console.log("The document was successfully deleted from the database.");
@@ -84,56 +84,24 @@ function AdminForm (props) {
 
     return(
         <>
-            <form id='form' property="mainContentOfPage" className="container" resource="#wb-main" typeof="WebPageElement">
-                <h1>Edit Form Entry</h1>
-                <div data-testid={'FnameInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Fname">First Name <strong className="required">(required)</strong></label>
-                    {firstNameErr && <ErrorMsg htmlFor="Fname"/>}
-                    <input type="text" className="form-control" id="Fname" size="40" placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-                </div>
-                <div data-testid={'LnameInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Lname">Last Name <strong className="required">(required)</strong></label>
-                    {lastNameErr && <ErrorMsg htmlFor="Lname"/>}
-                    <input type="text" className="form-control" id="Lname" size="40" placeholder="Doe" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                </div>
-                <div data-testid={'ColourInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Colour">Colour <strong className="required">(required)</strong></label>
-                    {colourErr && <ErrorMsg htmlFor="Colour"/>}
-                    <input type="text" className="form-control" id="Colour" size="40" placeholder="Red" value={favoriteColor} onChange={(e) => setFavColor(e.target.value)}/>
-                </div>
-                <div data-testid={'PetSelect'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Pet">Pet Preference <strong className="required">(required)</strong></label>
-                    {petErr && <ErrorMsg htmlFor="Pet"/>}
-                    <select className="form-control" id="Pet" value={favoritePet} onChange={(e) => setFavPet(e.target.value)}>
-                        <option value=""></option>
-                        <option>Dog</option>
-                        <option>Cat</option>
-                        <option>Fish</option>
-                    </select>
-                </div>
-                <div data-testid={'SubmitBtn'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label" htmlFor="feedback">Nice Message</label>
-                    <textarea className="form-control" rows={5} cols={50} id="feedback" placeholder="Add message for cookie." value={message} onChange={(e) => setMessage(e.target.value)}/>
-                    <br></br>
-                    {/* Unique stuff here: */}
-                    <button type="button" className="btn btn-default" onClick={() => editDocument()}>Save Changes</button>
-                    <span>{/* For spacing */}  </span>
-                    <button type="button" className="btn btn-danger" onClick={() => deleteDocument()}>Delete</button>
-                </div>
-            </form>
-            <br></br>
+            <FormBase
+                title={`Edit Form Entry ID: ${props.docId}`}
+                firstName={firstName} setFirstName={setFirstName}
+                lastName={lastName} setLastName={setLastName}
+                favoriteColor={favoriteColor} setFavColor={setFavColor}
+                favoritePet={favoritePet} setFavPet={setFavPet}
+                message={message} setMessage={setMessage}
+                firstNameErr={firstNameErr}
+                lastNameErr={lastNameErr}
+                colourErr={colourErr}
+                petErr={petErr}
+            >
+                <button type="button" className="btn btn-default" onClick={() => editDocument()}>Save Changes</button>
+                <span>{/* For spacing */}  </span>
+                <button type="button" className="btn btn-danger" onClick={() => deleteDocument()}>Delete</button>
+            </FormBase>
         </>
     )
 }
-function ErrorMsg(props) {
-    return (
-        <>
-            <br/>
-            <label className="control-label" htmlFor={props.htmlFor}>
-            <strong id="title1-error" className="error"><span className="label label-danger"><span className="prefix">Error: </span>This field is required.</span></strong>
-            </label>
-        </>
-    )
-  }
 
 export default AdminForm;
