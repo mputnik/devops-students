@@ -8,7 +8,5 @@ COPY . /home/app
 
 RUN npm install
 
-EXPOSE 3000
-
 #json array format
-CMD ["npm","run","start"]
+CMD ["npm","start"]

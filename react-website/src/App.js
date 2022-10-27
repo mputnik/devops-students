@@ -4,6 +4,7 @@ import Table from './pages/Table.js';
 import Form from './pages/Form.js'
 import Homepage from './pages/Homepage.js'
 import Confirmation from './pages/Confirmation.js'
+import AdminSignIn  from './pages/AdminSignIn.js'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<Homepage />}/>
           <Route path="confirmation" element={<Confirmation />} />
           <Route path="form" element={<Form />} />
+          <Route path="admin/sign-in" element={<AdminSignIn />} />
         </Route>
       </Routes>
     </BrowserRouter>
