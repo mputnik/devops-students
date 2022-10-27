@@ -16,7 +16,7 @@ function App() {
           <Route index element={<Homepage />}/>
           <Route path="confirmation" element={<Confirmation />} />
           <Route path="form" element={<Form />} />
-          <Route path="admin-sign-in" element={<AdminSignIn />} />
+          <Route path="admin/sign-in" element={<AdminSignIn />} />
         </Route>
       </Routes>
     </BrowserRouter>
