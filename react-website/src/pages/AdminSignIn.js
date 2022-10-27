@@ -19,7 +19,7 @@ function AdminSignIn() {
 
         if(user !== "" && password !== ""){
             const body = {
-                user: user,
+                username: user,
                 password: password,
             };
 
@@ -35,6 +35,9 @@ function AdminSignIn() {
                     console.log('Sign in successful');
                 })
                 .catch((error)=>{
+                    if(error.response){
+                        console.log(error.response.data);
+                    }
                     console.log('Sign in failed');
                 });
         }
