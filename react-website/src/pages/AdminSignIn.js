@@ -38,7 +38,7 @@ function AdminSignIn() {
                     if(error.response){
                         console.log(error.response.data);
                     }
-                    console.log('Sign in failed');
+                    console.log('Admin sign in failed');
                 });
         }
 
@@ -55,7 +55,7 @@ function AdminSignIn() {
                 <div data-testid={'PasswordInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
                     <label className="control-label required" htmlFor="Password">Password <strong className="required">(required)</strong></label>
                     {passwordErr && <ErrorMsg htmlFor="Password"/>}
-                    <input type="text" className="form-control" id="Password" size="40" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input type="password" className="form-control" id="Password" size="40" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 <div data-testid={'SubmitBtn'} className="form-group col-lg-12 col-md-12 col-sm-12">
                     <br></br>
