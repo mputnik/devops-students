@@ -10,7 +10,7 @@ function AdminSignIn() {
     
     const [userErr, setUserErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
-    
+
     function handleSubmit (event) {
         event.preventDefault();
         
@@ -23,19 +23,20 @@ function AdminSignIn() {
                 password: password,
             };
 
-            // axios({
-            //     // Full url defined in as proxy in package.json 
-            //     url: '/api/save',
-            //     method: 'POST',
-            //     data: body
-            // })
-            //     .then(()=>{
-            //         navigate("/confirmation");
-            //         console.log('The form data was successfuly sent to the server');
-            //     })
-            //     .catch((error)=>{
-            //         console.log('Internal server error: could not send form data to the server');
-            //     });
+            axios({
+                // Full url defined in as proxy in package.json 
+                url: '/api/admin/login',
+                method: 'POST',
+                data: body
+            })
+                .then((res)=>{
+                    window.location.href= "/data";
+                    window.localStorage.setItem('token', JSON.stringify(res.data));
+                    console.log('Sign in successful');
+                })
+                .catch((error)=>{
+                    console.log('Sign in failed');
+                });
         }
 
     }

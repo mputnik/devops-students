@@ -59,7 +59,7 @@ router.post('/admin/login', (req, res) => {
 
                 const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
                 
-                res.status(200).json({ token, username: creds.username })
+                res.status(200).json( token )
 
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
