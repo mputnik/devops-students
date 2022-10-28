@@ -59,7 +59,7 @@ router.post('/admin/login', (req, res) => {
 
                 const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
                 
-                res.status(200).json( {token: token })
+                res.status(200).json({token})
 
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
@@ -70,26 +70,29 @@ router.post('/admin/login', (req, res) => {
         });
 })
 
-router.get('/admin/is-auth', (req,res) => {
+router.post('/admin/is-auth', (req,res) => {
+    let decodedToken = null;
+    const token = getTokenFrom(req)//call helper function to parse token
 
-    const token = req.get('token')
-
-
-    const decodedToken = jwt.verify(token, 'secret');
-
-    if(!decodedToken.username){
-        res
-        .status(401)
-        .send();
-
-    }else{
-        res
-        .status(200)
-        .send();
+    if(token !== 'null' || token !== null){
+        decodedToken = jwt.verify(token, 'secret')
+    }
+    
+    if(decodedToken !== null){
+        if(!token || !decodedToken.username){
+            return res.status(401).json({error: 'token missing or invalid'})
+        }
     }
 
-    
-
+    res.status(200).json({})
 })
+//
+const getTokenFrom = req => {
+    const authorization = req.get('authorization')
 
+    if(authorization && authorization.toLowerCase().startsWith('Bearer ')){
+        return authorization.substring(7)
+    }
+    return null
+}
 module.exports = router;
