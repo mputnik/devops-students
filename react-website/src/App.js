@@ -12,26 +12,29 @@ function App() {
 
   const [authenticated, setAuthenticated] = useState(false);
 
-
-
   useEffect(() => {
+    const object = JSON.parse(window.localStorage.getItem('token'))
 
-      const object = JSON.parse(window.localStorage.getItem('token'))
+    if(object){
+      //Authorization Header is used to sent token to backend API
+      //format: Bearer <key>
+      const sendKey = 'Bearer ' + object.token
 
-    axios({
-      url: '/api/admin/is-auth',
-      method: 'GET',
-      headers: {token: object.token}
-    })
-    .then((res) => {
-
+      axios({
+        url: '/api/admin/is-auth',
+        method: 'POST',
+        headers: {Authorization: sendKey}
+      })
+      .then((res) => {
         setAuthenticated(res.status === 200)
-    })
-    .catch((error) => {
-      console.log('could not authenticate')
-    })
+      })
+      .catch((error) => {
+        console.log('could not authenticate')
+      })
+    }
 
-  }, []);
+}, []);//end useEffect
+
 
   return (
     <BrowserRouter>
