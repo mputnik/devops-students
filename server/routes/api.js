@@ -46,7 +46,7 @@ router.post('/save', (req, res) =>{
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
-    
+
     Admin.findOne({ username: creds.username })
         .then(async (dbcreds) => {
             const passwordCorrect = await bcrypt.compare(creds.password, dbcreds.password)
@@ -59,7 +59,7 @@ router.post('/admin/login', (req, res) => {
 
                 const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
                 
-                res.status(200).json( token )
+                res.status(200).json( {token: token })
 
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
@@ -68,6 +68,28 @@ router.post('/admin/login', (req, res) => {
         .catch((error) => {
             res.status(404).json({ message: `Login failed. Admin not found.\nError: ${error}` });
         });
+})
+
+router.get('/admin/is-auth', (req,res) => {
+
+    const token = req.get('token')
+
+
+    const decodedToken = jwt.verify(token, 'secret');
+
+    if(!decodedToken.username){
+        res
+        .status(401)
+        .send();
+
+    }else{
+        res
+        .status(200)
+        .send();
+    }
+
+    
+
 })
 
 module.exports = router;

@@ -1,4 +1,11 @@
-function Header() {
+function Header(props) {
+
+    function handleSignOut(){
+        window.localStorage.removeItem('token');
+        props.setAuth(false)
+    }
+    
+
     return (
         <div>
             <header>
@@ -48,7 +55,10 @@ function Header() {
                         <li role="presentation"><a role="menuitem" href="/data">View submissions table</a></li>
                         <li role="presentation"><a role="menuitem" href="/">Swagger Docs</a></li>
                     </ul>
-                    <a href="/admin/sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a>
+                    {props.isAuthenticated? 
+                    <button onclick={()=> handleSignOut()} type="button" className="btn btn-default">Sign out</button>
+                    :
+                    <a href="/admin/sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a> }
                 </div>
                 </nav>
                 <nav id="wb-bc" property="breadcrumb">
@@ -61,6 +71,7 @@ function Header() {
                 </nav>
             </header>
         </div>
+
     );
 }
 
