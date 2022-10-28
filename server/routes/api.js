@@ -90,7 +90,7 @@ router.post('/admin/is-auth', (req,res) => {
 const getTokenFrom = req => {
     const authorization = req.get('authorization')
 
-    if(authorization && authorization.toLowerCase().startsWith('Bearer ')){
+    if(authorization && authorization.toLowerCase().startsWith('bearer ')){
         return authorization.substring(7)
     }
     return null
