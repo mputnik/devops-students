@@ -18,19 +18,11 @@ describe("Test API and database", () => {
                 favoritePet: "dog",
                 favoriteColor: "Blue",
                 message: "Cookies are delicious"
-            },
-            {
-                firstName: "Unknown",
-                lastName: "Ghost",
-                favoritePet: "fish",
-                favoriteColor: "Yellow",
-                message: "Yum yum" 
             }
         ];
 
         // Add data to retrieve via GET.
         server.add(testData[0]);
-        server.add(testData[1]);
 
         request(server.app)
             .get('/api')
@@ -69,6 +61,35 @@ describe("Test API and database", () => {
             .expect('Content-Type', 'application/json; charset=utf-8')
             .expect(400, { msg: 'Failed to save your data.' }, done);
     });
+
+    test("attempt sign in with incorrect credentials", (done) => {
+        request(server.app)
+            .post('/api/admin/login')
+            .send({
+                username: "notAdmin",
+                password: "notAdmin"
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect(404, done);
+    });
+
+    test("attempt sign in with correct credentials", (done) => {
+        request(server.app)
+            .post('/api/admin/login')
+            .send({
+                username: "admin",
+                password: "admin"
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect(200, done);
+    });
+
+    beforeAll(async () => {
+        await server.initAdmin();
+    });
+
 
     beforeEach(async () => {
         await server.drop();
