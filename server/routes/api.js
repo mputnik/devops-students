@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const router = express.Router();
 const FormPost = require('../models/FormPost');
 const Admin = require('../models/Admin');
@@ -86,13 +88,21 @@ router.put('/admin/edit/:id', (req, res) => {
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
-    
-    Admin.find({ username: creds.username })
-        .then((dbcreds) => {
-            // Add whatever encryption/decryption here.
-            if (dbcreds.password === creds.password) {
-                // Send auth token back.
-                res.status(200).json({});
+
+    Admin.findOne({ username: creds.username })
+        .then(async (dbcreds) => {
+            const passwordCorrect = await bcrypt.compare(creds.password, dbcreds.password)
+
+            if (passwordCorrect) {
+                
+                const userForToken = {
+                    username: creds.username
+                }
+
+                const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
+                
+                res.status(200).json({token})
+
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
             }
@@ -102,4 +112,29 @@ router.post('/admin/login', (req, res) => {
         });
 })
 
+router.post('/admin/is-auth', (req,res) => {
+    let decodedToken = null;
+    const token = getTokenFrom(req)//call helper function to parse token
+
+    if(token !== 'null' || token !== null){
+        decodedToken = jwt.verify(token, 'secret')
+    }
+    
+    if(decodedToken !== null){
+        if(!token || !decodedToken.username){
+            return res.status(401).json({error: 'token missing or invalid'})
+        }
+    }
+
+    res.status(200).json({})
+})
+//
+const getTokenFrom = req => {
+    const authorization = req.get('authorization')
+
+    if(authorization && authorization.toLowerCase().startsWith('bearer ')){
+        return authorization.substring(7)
+    }
+    return null
+}
 module.exports = router;

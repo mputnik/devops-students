@@ -1,4 +1,14 @@
-function Header() {
+import { useNavigate } from "react-router-dom";
+
+function Header(props) {
+    const navigate = useNavigate();
+
+    function handleSignOut(){
+        window.localStorage.removeItem('token');
+        props.setAuth(false)
+        navigate("/");
+    }
+    
     return (
         <div>
             <header>
@@ -46,10 +56,12 @@ function Header() {
                         <li role="presentation"><a role="menuitem" href="/">Home</a></li>
                         <li role="presentation"><a role="menuitem" href="/form">Submit a form</a></li>
                         <li role="presentation"><a role="menuitem" href="/data">View submissions table</a></li>
-                        <li role="presentation"><a role="menuitem" href="/admin-sign-in">Admin sign in</a></li>
                         <li role="presentation"><a role="menuitem" href="/">Swagger Docs</a></li>
                     </ul>
-                    <a href="/admin-sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a>
+                    {props.isAuthenticated? 
+                    <button onClick={()=> handleSignOut()} type="button" className="btn btn-default col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Sign out</button>
+                    :
+                    <a href="/admin/sign-in" className="btn btn-primary btn btn-primary col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Admin sign in</a> }
                 </div>
                 </nav>
                 <nav id="wb-bc" property="breadcrumb">
@@ -62,6 +74,7 @@ function Header() {
                 </nav>
             </header>
         </div>
+
     );
 }
 
