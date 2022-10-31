@@ -65,8 +65,14 @@ function AdminForm (props) {
                         console.log('The form data was successfuly sent to the server');
                     })
                     .catch((error)=>{
+                        alert("Could not modify from data. Check error logs for more information.");
+                        window.location.href = '/data';
                         console.log(`Internal server error: could not send form data to the server.\nError: ${error.message}`);
                     });                
+            }else{
+                alert("Admin session token has expired. Click the 'Admin sign in' button to sign in as Admin again.");
+                window.location.href = '/';
+                console.log(`Unable to modify form data, admin session token expired.`);
             }
 
         }
@@ -91,8 +97,14 @@ function AdminForm (props) {
                     window.location.href = '/data';
                 })
                 .catch((error) => {
+                    alert("Could not delete from data. Check error logs for more information.");
+                    window.location.href = '/data';
                     console.log(`Deletion failed.\nError: ${error.message}`);
                 });
+            }else{
+                alert("Admin session token has expired. Click the 'Admin sign in' button to sign in as Admin again.");
+                window.location.href = '/';
+                console.log(`Unable to delete form data, admin session token expired.`);
             }
     }
 

@@ -10,6 +10,7 @@ function AdminSignIn() {
     
     const [userErr, setUserErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
+    const [loginFailedErr, setLoginFailedErr] = useState(false);
 
     function handleSubmit (event) {
         event.preventDefault();
@@ -35,6 +36,8 @@ function AdminSignIn() {
                     console.log('Sign in successful');
                 })
                 .catch((error)=>{
+                    setLoginFailedErr(true);
+                    setPassword("");
                     if(error.response){
                         console.log(error.response.data);
                     }
@@ -61,17 +64,30 @@ function AdminSignIn() {
                     <br></br>
                     <button type="submit" className="btn btn-default">Sign In </button>
                 </div>
+                <div>{loginFailedErr && <LoginFailedMsg htmlFor="LoginFailed"/>}</div>
             </form>
             <br></br>
         </>
     );
 }
+
 function ErrorMsg(props) {
     return (
         <>
             <br/>
             <label className="control-label" htmlFor={props.htmlFor}>
             <strong id="title1-error" className="error"><span className="label label-danger"><span className="prefix">Error: </span>This field is required.</span></strong>
+            </label>
+        </>
+    )
+}
+
+function LoginFailedMsg(props) {
+    return (
+        <>
+            <br/>
+            <label className="control-label" htmlFor={props.htmlFor}>
+            <strong id="title1-error" className="error"><span className="label label-danger"><span className="prefix">Error: </span>incorrect username or password.</span></strong>
             </label>
         </>
     )
