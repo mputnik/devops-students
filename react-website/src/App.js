@@ -41,7 +41,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Base isAuthenticated={authenticated} setAuth={setAuthenticated}/>}>
-          <Route path="data" element={<Table setDocId={setDocId} />} />
+          <Route path="data" element={<Table setDocId={setDocId} isAuthenticated={authenticated}/>} />
           <Route index element={<Homepage />}/>
           <Route path="confirmation" element={<Confirmation />} />
           <Route path="form" element={<UserForm />} />

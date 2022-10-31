@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const CreateTable = ({ data, column, setDocId }) => {
+const CreateTable = ({ data, column, setDocId, isAuthenticated }) => {
     return (
         <table className="wb-tables table table-striped table-hover" data-wb-tables='{ "ordering" : false }'>
             <thead>
@@ -11,7 +11,7 @@ const CreateTable = ({ data, column, setDocId }) => {
             </tr>
             </thead>
             <tbody>
-                {data.map((item, i) => <TableRow item={item} column={column} setDocId={setDocId} key={i} />)}
+                {data.map((item, i) => <TableRow item={item} column={column} setDocId={setDocId} isAuthenticated={isAuthenticated} key={i} />)}
             </tbody>
         </table>
     )
@@ -19,7 +19,7 @@ const CreateTable = ({ data, column, setDocId }) => {
   
 const TableHeadItem = ({ item }) => <th>{item.heading}</th>
   
-const TableRow = ({ item, column, setDocId }) => {
+const TableRow = ({ item, column, setDocId, isAuthenticated }) => {
   const navigate = useNavigate();
 
   function rowClick (docId) {
@@ -27,11 +27,8 @@ const TableRow = ({ item, column, setDocId }) => {
     navigate('/admin-form')
   }
 
-  // Replace with authentication token check.
-  const auth = true;
-
   return (
-    <tr type="button" onClick={auth ? () => rowClick(item._id) : null}>
+    <tr type="button" onClick={isAuthenticated? () => rowClick(item._id) : null}>
       {column.map((columnItem, i) => {
         return <td key={i}>{item[`${columnItem.value}`]}</td>
       })}
@@ -69,7 +66,7 @@ function Table(props) {
     return (
       <div id="wb-bnr" className="container">
         <h1>Submitted Forms Table</h1>
-        <CreateTable data={tableData} column={column} setDocId={props.setDocId} />
+        <CreateTable data={tableData} column={column} setDocId={props.setDocId} isAuthenticated={props.isAuthenticated}/>
         <br/><br/>
       </div>
     );

@@ -46,37 +46,54 @@ function AdminForm (props) {
                 message: message
             };
 
-            axios({
-                // Full url defined in as proxy in package.json 
-                // TODO: update url when route is decided.
-                url: `/api/admin/edit/${props.docId}`,
-                method: 'PUT',
-                data: body
-            })
-                .then(()=>{
-                    window.location.href = '/data';
-                    console.log('The form data was successfuly sent to the server');
+            const object = JSON.parse(window.localStorage.getItem('token'));
+
+            if(object){
+            
+                const sendKey = 'Bearer ' + object.token;
+
+                axios({
+                    // Full url defined in as proxy in package.json 
+                    // TODO: update url when route is decided.
+                    url: `/api/admin/edit/${props.docId}`,
+                    method: 'PUT',
+                    data: body,
+                    headers: {Authorization: sendKey}
                 })
-                .catch((error)=>{
-                    console.log(`Internal server error: could not send form data to the server.\nError: ${error.message}`);
-                });
+                    .then(()=>{
+                        window.location.href = '/data';
+                        console.log('The form data was successfuly sent to the server');
+                    })
+                    .catch((error)=>{
+                        console.log(`Internal server error: could not send form data to the server.\nError: ${error.message}`);
+                    });                
+            }
+
         }
 
     }
 
     function deleteDocument() {
-        axios({
-            // TODO: update url when route is decided.
-            url: `/api/admin/delete/${props.docId}`,
-            method: 'DELETE'
-        })
-            .then(() => {
-                console.log("The document was successfully deleted from the database.");
-                window.location.href = '/data';
+        const object = JSON.parse(window.localStorage.getItem('token'));
+
+        if(object){
+
+            const sendKey = 'Bearer ' + object.token;
+
+            axios({
+                // TODO: update url when route is decided.
+                url: `/api/admin/delete/${props.docId}`,
+                method: 'DELETE',
+                headers: {Authorization: sendKey}
             })
-            .catch((error) => {
-                console.log(`Deletion failed.\nError: ${error.message}`);
-            });
+                .then(() => {
+                    console.log("The document was successfully deleted from the database.");
+                    window.location.href = '/data';
+                })
+                .catch((error) => {
+                    console.log(`Deletion failed.\nError: ${error.message}`);
+                });
+            }
     }
 
     return(

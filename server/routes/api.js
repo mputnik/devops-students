@@ -59,30 +59,61 @@ router.get('/search/:id', (req, res) => {
 
 router.delete('/admin/delete/:id', (req, res) =>{
     const id = req.params.id;
-    FormPost.findByIdAndDelete(`${id}`)
-        .then((rawData) => {
-            console.log(rawData);
-            res.status(201).json({ msg: `id ${id} data successfuly deleted from to mongodb database` });
-        })
-        .catch((error) =>{
-            res.status(404).json({ message: `Query failed. Could not delete data from mongodb database.\nError: ${error}` });
-        });
+
+    let decodedToken = null;
+    const token = getTokenFrom(req)//call helper function to parse token
+
+    if(token !== 'null' || token !== null){
+        decodedToken = jwt.verify(token, 'secret')
+    }
+    
+    if(decodedToken !== null){
+        if(token && decodedToken.username){
+            FormPost.findByIdAndDelete(`${id}`)
+                .then((rawData) => {
+                    console.log(rawData);
+                    res.status(201).json({ msg: `id ${id} data successfuly deleted from to mongodb database` });
+                })
+                .catch((error) =>{
+                    res.status(404).json({ message: `Query failed. Could not delete data from mongodb database.\nError: ${error}` });
+                });
+            return
+        }
+    } 
+
+    res.status(401).json({error: 'token missing or invalid'})
+
 })
 
 router.put('/admin/edit/:id', (req, res) => {
     const id = req.params.id;
     const newdata = req.body;
+
+    let decodedToken = null;
+    const token = getTokenFrom(req)//call helper function to parse token
+
+    if(token !== 'null' || token !== null){
+        decodedToken = jwt.verify(token, 'secret')
+    }
     
-    FormPost.findByIdAndUpdate(`${id}`, 
-                                {$set:{firstName: newdata.firstName, lastName: newdata.lastName,
-                                favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
-                                message: newdata.message}}, {new: true})
-        .then(() => {
-            res.status(200).json({ msg: `id ${id} data successfuly updated` });
-        })
-        .catch((error) => {
-            res.status(404).json({ message: `Could not update data.\nError: ${error}` });
-        });
+    if(decodedToken !== null){
+        if(token && decodedToken.username){
+            FormPost.findByIdAndUpdate(`${id}`, 
+                                        {$set:{firstName: newdata.firstName, lastName: newdata.lastName,
+                                        favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
+                                        message: newdata.message}}, {new: true})
+                .then(() => {
+                    res.status(200).json({ msg: `id ${id} data successfuly updated` });
+                })
+                .catch((error) => {
+                    res.status(404).json({ message: `Could not update data.\nError: ${error}` });
+                });
+            return
+        }
+    } 
+
+    res.status(401).json({error: 'token missing or invalid'})
+    
 })
 
 // Online resources say that POST is used for logins for security.
@@ -121,14 +152,16 @@ router.post('/admin/is-auth', (req,res) => {
     }
     
     if(decodedToken !== null){
-        if(!token || !decodedToken.username){
-            return res.status(401).json({error: 'token missing or invalid'})
+        if(token && decodedToken.username){
+            res.status(200).json({})
+            return
         }
-    }
+    } 
 
-    res.status(200).json({})
+    res.status(401).json({error: 'token missing or invalid'})
+
 })
-//
+
 const getTokenFrom = req => {
     const authorization = req.get('authorization')
 
