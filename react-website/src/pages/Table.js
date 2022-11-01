@@ -53,8 +53,6 @@ function Table(props) {
     // Keep the empty array.
     }, []);
 
-    const ObjectId = '_id';
-
     const column = [
       { heading: 'First Name', value: 'firstName' },
       { heading: 'Last Name', value: 'lastName' },
