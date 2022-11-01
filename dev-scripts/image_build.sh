@@ -3,4 +3,4 @@ sudo docker network create --driver=bridge dnet
 sudo docker build -t react ../react-website/
 sudo docker build -t api ../server/
 sudo docker build -t proxy ../proxy/
-sudo docker run -d --network=dnet --name database mongo:latest
+sudo docker run -d --network=dnet --rm -v data:/data/db --name database mongo:5.0

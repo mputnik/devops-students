@@ -5,4 +5,4 @@ sudo docker run -d --name api_cont --network=dnet api
 # Since react needs some time to start up, sleep for 1 mins
 sleep 60s
 
-sudo docker run --name proxy_cont --network=dnet -p 4000:4000 proxy
+sudo docker run --name proxy_cont --network=dnet -dp 4000:4000 proxy
