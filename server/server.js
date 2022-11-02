@@ -44,9 +44,15 @@ module.exports = function(dbName,address) {
     // Functions for testing purposes.
     server.add = function (data) {
         const newData = new FormPost(data);
-        newData.save((err) => {
+        newData.save(function(err, data) {
+            console.log(123);
+            console.log(data);
+            console.log(123);
             if (err) {
                 console.error(`Could not save data to mongodb.\nError: ${err}`);
+            }else{
+                console.log('return id: '+data._id);
+                return data._id
             }
         });
     };

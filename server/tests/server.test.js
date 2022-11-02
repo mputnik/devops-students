@@ -86,6 +86,30 @@ describe("Test API and database", () => {
             .expect(200, done);
     });
 
+    test("search mongodb data using id value", (done) => {
+        const testInput = {
+            firstName: "Test",
+            lastName: "123",
+            favoritePet: "dog",
+            favoriteColor: "Blue",
+            message: "Hello there!!!"
+        };
+
+        const ObjectId = server.add(testInput);
+        console.log(1234);
+        console.log(ObjectId);
+        console.log(1234);
+
+        // const ObjectId = server.findID('John');
+        // testInput._id = ObjectId;
+        
+        request(server.app)
+            .get(`/api/search/${ObjectId}`)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect(200, testInput, done);
+    });
+
     beforeAll(async () => {
         await server.initAdmin();
     });
