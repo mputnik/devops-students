@@ -63,7 +63,7 @@ router.delete('/admin/delete/:id', (req, res) =>{
     let decodedToken = null;
     const token = getTokenFrom(req)//call helper function to parse token
 
-    if(token !== 'null' || token !== null){
+    if(token !== null){
         decodedToken = jwt.verify(token, 'secret')
     }
     
@@ -72,7 +72,7 @@ router.delete('/admin/delete/:id', (req, res) =>{
             FormPost.findByIdAndDelete(`${id}`)
                 .then((rawData) => {
                     console.log(rawData);
-                    res.status(201).json({ msg: `id ${id} data successfuly deleted from to mongodb database` });
+                    res.status(201).json({ message: `id ${id} data successfuly deleted from to mongodb database` });
                 })
                 .catch((error) =>{
                     res.status(404).json({ message: `Query failed. Could not delete data from mongodb database.\nError: ${error}` });
@@ -81,7 +81,7 @@ router.delete('/admin/delete/:id', (req, res) =>{
         }
     } 
 
-    res.status(401).json({error: 'token missing or invalid'})
+    res.status(401).json({message: 'token missing or invalid'})
 
 })
 
@@ -92,7 +92,7 @@ router.put('/admin/edit/:id', (req, res) => {
     let decodedToken = null;
     const token = getTokenFrom(req)//call helper function to parse token
 
-    if(token !== 'null' || token !== null){
+    if(token !== null){
         decodedToken = jwt.verify(token, 'secret')
     }
     
@@ -103,7 +103,7 @@ router.put('/admin/edit/:id', (req, res) => {
                                         favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
                                         message: newdata.message}}, {new: true})
                 .then(() => {
-                    res.status(200).json({ msg: `id ${id} data successfuly updated` });
+                    res.status(200).json({ message: `id ${id} data successfuly updated` });
                 })
                 .catch((error) => {
                     res.status(404).json({ message: `Could not update data.\nError: ${error}` });
@@ -112,7 +112,7 @@ router.put('/admin/edit/:id', (req, res) => {
         }
     } 
 
-    res.status(401).json({error: 'token missing or invalid'})
+    res.status(401).json({message: 'token missing or invalid'})
     
 })
 
@@ -147,7 +147,7 @@ router.post('/admin/is-auth', (req,res) => {
     let decodedToken = null;
     const token = getTokenFrom(req)//call helper function to parse token
 
-    if(token !== 'null' || token !== null){
+    if(token !== null){
         decodedToken = jwt.verify(token, 'secret')
     }
     
@@ -158,7 +158,7 @@ router.post('/admin/is-auth', (req,res) => {
         }
     } 
 
-    res.status(401).json({error: 'token missing or invalid'})
+    res.status(401).json({message: 'token missing or invalid'})
 
 })
 
