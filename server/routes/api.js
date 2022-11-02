@@ -5,6 +5,110 @@ const router = express.Router();
 const FormPost = require('../models/FormPost');
 const Admin = require('../models/Admin');
 
+//swagger docs imports
+const swaggerJSDocs = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+          title: 'HC Form App api',
+          version: '1.0.0',
+        },
+        servers : [
+            {
+                url: 'http://localhost:4000/api'
+            }
+        ]
+    },
+    apis: ['./routes/api.js']
+}
+
+const swaggerSpec = swaggerJSDocs(options);
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/**
+ * @swagger
+ *  tags:
+ *      name: - admin
+ *          description: Admin api calls 
+ *      name: - table
+ *          description: Table api calls
+ */
+
+/** 
+ * @swagger
+ *  components:
+ *      schemas:
+ *          retrieve: 
+ *              type: object
+ *              require:
+ *              - firstName
+ *              - lastName
+ *              - favoritePet
+ *              - favoriteColor
+ *              - _id
+ *              properties:
+ *                  firstName: 
+ *                      type: string
+ *                  lastName:
+ *                      type: string
+ *                  favoritePet:
+ *                      type: string
+ *                  favoriteColor:
+ *                      type: string
+ *                  message:
+ *                      type: string
+ *                  _id:
+ *                      type: string
+*/
+
+/** 
+ * @swagger
+ *  components:
+ *      schemas:
+ *          save: 
+ *              type: object
+ *              require:
+ *              - firstName
+ *              - lastName
+ *              - favoritePet
+ *              - favoriteColor
+ *              properties:
+ *                  firstName: 
+ *                      type: string
+ *                  lastName:
+ *                      type: string
+ *                  favoritePet:
+ *                      type: string
+ *                  favoriteColor:
+ *                      type: string
+ *                  message:
+ *                      type: string
+*/
+
+/**
+ * @swagger
+ * /:
+ *  get: 
+ *      summary: retreive data from the database
+ *      tags: 
+ *          - table
+ *      description: This api is used to retrieve the data from the database
+ *      responses:
+ *          '200': 
+ *              description: Success
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/retrieve'
+ *          '404':
+ *              description: Could not retrieve data from mongodb database
+ */
+
 // routes
 router.get('/', (req, res) =>{ 
     FormPost.find({})
@@ -26,6 +130,28 @@ router.get('/', (req, res) =>{
         });
 })
 
+/**
+ * @swagger
+ * /save:
+ *  post: 
+ *      summary: save data to the database
+ *      tags: 
+ *          - table
+ *      description: This api is used to save data to the database
+ *      requestBody:
+ *          description: testing
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/save'
+ *      responses:
+ *          201: 
+ *              description: Data successfuly saved to mongodb database
+ *          400:
+ *              description: Could not save data to mongodb database
+ */
+
 router.post('/save', (req, res) =>{
     console.log('Body: ', req.body);
     
@@ -44,6 +170,27 @@ router.post('/save', (req, res) =>{
     
 })
 
+/**
+ * @swagger
+ * /search/{id}:
+ *  get: 
+ *      summary: retrieve an item by id from the database
+ *      tags: 
+ *          - table
+ *      description: This api is used to retrieve an item by {id} from the database
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *              type: string
+ *      responses:
+ *          200: 
+ *              description: Data successfuly retreived
+ *          400:
+ *              description: Could not retrieve data from mongodb database
+ */
+
 // dynamic routes use ':' to indicate url params
 router.get('/search/:id', (req, res) => {
     const id = req.params.id;
@@ -56,6 +203,29 @@ router.get('/search/:id', (req, res) => {
             console.log(`Could not retrieve data from mongodb database.\n${error.message})`);
         });
 })
+
+/**
+ * @swagger
+ * /admin/delete/{id}:
+ *  delete: 
+ *      summary: delete an item by id from the database
+ *      tags:
+ *          - admin
+ *      description: This api is used to delete an item by {id} from the database 
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *              type: string
+ *      responses:
+ *          201: 
+ *              description: Data successfuly deleted from mongodb database
+ *          401:
+ *              description: Token missing or invalid
+ *          404:
+ *              description: Could not delete data from mongodb database.
+ */
 
 router.delete('/admin/delete/:id', (req, res) =>{
     const id = req.params.id;
@@ -84,6 +254,23 @@ router.delete('/admin/delete/:id', (req, res) =>{
     res.status(401).json({message: 'token missing or invalid'})
 
 })
+
+/**
+ * @swagger
+ * /admin/edit/{id}:
+ *  put: 
+ *      summary: edit an item by id from the database
+ *      tags: 
+ *          - admin
+ *      description: This api is used to edit an item by {id} from the database when signed in as an admin. 
+ *      responses:
+ *          201: 
+ *              description: Data successfuly updated to mongodb database
+ *          401:
+ *              description: Token missing or invalid
+ *          404:
+ *              description: Could not edit data from mongodb database.
+ */
 
 router.put('/admin/edit/:id', (req, res) => {
     const id = req.params.id;
@@ -116,6 +303,23 @@ router.put('/admin/edit/:id', (req, res) => {
     
 })
 
+/**
+ * @swagger
+ * /admin/login:
+ *  post: 
+ *      summary: sign in
+ *      tags: 
+ *          - admin
+ *      description: This api is used to sign in as an admin. 
+ *      responses:
+ *          201: 
+ *              description: Login success.
+ *          401:
+ *              description: Login failed. Password incorrect.
+ *          404:
+ *              description: Login failed. Admin not found.
+ */
+
 // Online resources say that POST is used for logins for security.
 router.post('/admin/login', (req, res) => {
     const creds = req.body;
@@ -142,6 +346,21 @@ router.post('/admin/login', (req, res) => {
             res.status(404).json({ message: `Login failed. Admin not found.\nError: ${error}` });
         });
 })
+
+/**
+ * @swagger
+ * /admin/is-auth:
+ *  post: 
+ *      summary: checks if user is authorized
+ *      tags: 
+ *          - admin
+ *      description: This api is used to check if a user is authorized
+ *      responses:
+ *          201: 
+ *              description: User is authorized
+ *          401:
+ *              description: User is not authorzied (token missing or invalid)
+ */
 
 router.post('/admin/is-auth', (req,res) => {
     let decodedToken = null;

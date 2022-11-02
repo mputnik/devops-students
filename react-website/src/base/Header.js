@@ -56,7 +56,7 @@ function Header(props) {
                         <li role="presentation"><a role="menuitem" href="/">Home</a></li>
                         <li role="presentation"><a role="menuitem" href="/form">Submit a form</a></li>
                         <li role="presentation"><a role="menuitem" href="/data">View submissions table</a></li>
-                        <li role="presentation"><a role="menuitem" href="/">Swagger Docs</a></li>
+                        <li role="presentation"><a role="menuitem" href="/api/api-docs">Swagger Docs</a></li>
                     </ul>
                     {props.isAuthenticated? 
                     <button onClick={()=> handleSignOut()} type="button" className="btn btn-default col-lg-offset-9 col-md-offset-8 col-sm-offset-6 col-xs-offset-4">Sign out</button>
