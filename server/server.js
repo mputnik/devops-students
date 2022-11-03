@@ -1,4 +1,4 @@
-module.exports = function(dbName) {
+module.exports = function(dbName,address) {
     let server = {};
 
     // Import npm packages
@@ -16,7 +16,7 @@ module.exports = function(dbName) {
     const routes = require('./routes/api');
 
     // Establish connection to mongodb database
-    mongoose.connect(`mongodb://database:27017/${dbName}`, {
+    mongoose.connect(`mongodb://${address}:27017/${dbName}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
