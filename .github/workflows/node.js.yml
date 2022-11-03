@@ -9,6 +9,7 @@ on:
     branches: [ "feature/github-actions" ]
 
 jobs:
+  #label of job
   build:
 
     runs-on: ubuntu-latest
@@ -21,12 +22,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: '18.12'
         cache: 'npm'
         cache-dependency-path: ./server/package-lock.json
 
     - run: npm ci
+      working-directory: /home/runner/work/devops-students/devops-students/server
    #- run: npm run build --if-present //to be implemented when we build for prod
     - run: npm test
+      working-directory: /home/runner/work/devops-students/devops-students/server
