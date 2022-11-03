@@ -4,7 +4,7 @@
   "description": "server",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "server": "node main.js",
     "client": "cd ../react-website && npm start",
     "dev": "concurrently -n server,client -c red,green  \"npm run server\" \"npm run client\""
@@ -23,7 +23,7 @@
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
-    "jest": "^29.1.2",
-    "supertest": "^6.3.0"
+    "jest": "^29.2.2",
+    "supertest": "^6.3.1"
   }
 }

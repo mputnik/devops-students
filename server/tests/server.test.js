@@ -6,45 +6,42 @@ describe("Test API and database", () => {
         request(server.app)
             .get('/api')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', /json/)
             .expect(200, [], done);
     });
 
-    test("processes GET non-empty", (done) => {
-        const testData = [
-            {
-                firstName: "Jane",
-                lastName: "Dane",
-                favoritePet: "dog",
-                favoriteColor: "Blue",
-                message: "Cookies are delicious"
-            }
-        ];
+    test("processes GET non-empty", async () => {
+        const testData = {
+            firstName: "Jane",
+            lastName: "Dane",
+            favoritePet: "dog",
+            favoriteColor: "Blue",
+            message: "Cookies are delicious"
+        };
 
         // Add data to retrieve via GET.
-        server.add(testData[0]);
+        testData._id = await server.add(testData);
+        testData.__v = 0;
 
-        request(server.app)
+        await request(server.app)
             .get('/api')
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
-            .expect(200, testData, done);
+            .expect('Content-Type', /json/)
+            .expect(200, [testData]);
     });
 
     test("passes POST with correct schema", (done) => {
-        const testInput = {
-            firstName: "John",
-            lastName: "Smith",
-            favoritePet: "dog",
-            favoriteColor: "Blue",
-            message: "Hello, world!"
-        };
-        
         request(server.app)
             .post('/api/save')
-            .send(testInput)
+            .send({
+                firstName: "John",
+                lastName: "Smith",
+                favoritePet: "dog",
+                favoriteColor: "Blue",
+                message: "Hello, world!"
+            })
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', /json/)
             .expect(201, { msg: 'We received your data!' }, done);
     });
 
@@ -58,7 +55,7 @@ describe("Test API and database", () => {
                 isGood: false
             })
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', /json/)
             .expect(400, { msg: 'Failed to save your data.' }, done);
     });
 
@@ -70,7 +67,7 @@ describe("Test API and database", () => {
                 password: "notAdmin"
             })
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', /json/)
             .expect(404, done);
     });
 
@@ -82,11 +79,11 @@ describe("Test API and database", () => {
                 password: "admin"
             })
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
+            .expect('Content-Type', /json/)
             .expect(200, done);
     });
 
-    test("search mongodb data using id value", (done) => {
+    test("search mongodb data using id value", async () => {
         const testInput = {
             firstName: "Test",
             lastName: "123",
@@ -95,19 +92,14 @@ describe("Test API and database", () => {
             message: "Hello there!!!"
         };
 
-        const ObjectId = server.add(testInput);
-        console.log(1234);
-        console.log(ObjectId);
-        console.log(1234);
-
-        // const ObjectId = server.findID('John');
-        // testInput._id = ObjectId;
+        testInput._id = await server.add(testInput);
+        testInput.__v = 0;
         
-        request(server.app)
-            .get(`/api/search/${ObjectId}`)
+        await request(server.app)
+            .get(`/api/search/${testInput._id}`)
             .set('Accept', 'application/json')
-            .expect('Content-Type', 'application/json; charset=utf-8')
-            .expect(200, testInput, done);
+            .expect('Content-Type', /json/)
+            .expect(200, testInput);
     });
 
     beforeAll(async () => {
