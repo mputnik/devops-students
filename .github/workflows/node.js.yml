@@ -9,8 +9,8 @@ on:
     branches: [ "feature/github-actions" ]
 
 jobs:
-  #label of job
-  build:
+  #backend
+  server-integration-test:
 
     runs-on: ubuntu-latest
 
@@ -33,3 +33,18 @@ jobs:
    #- run: npm run build --if-present //to be implemented when we build for prod
     - run: npm test
       working-directory: /home/runner/work/devops-students/devops-students/server
+
+  #frontend
+  client-integration-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - run: npm ci
+      working-directory: /home/runner/work/devops-students/devops-students/react-website
+
+    - run: npm test
+      working-directory: /home/runner/work/devops-students/devops-students/react-website
+
