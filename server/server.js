@@ -51,6 +51,22 @@ module.exports = function(dbName,address) {
         return savedId;
     };
 
+    server.getAll = async function () {
+        let data;
+        await FormPost.find({}).then(rawData => {
+            data = rawData.map((obj) => ({
+                firstName: obj.firstName,
+                lastName: obj.lastName,
+                favoritePet: obj.favoritePet,
+                favoriteColor: obj.favoriteColor,
+                message: obj.message
+            }));
+            return;
+        });
+
+        return data;
+    }
+
     server.drop = async function() {
         await FormPost.deleteMany();
     };

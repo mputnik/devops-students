@@ -1,7 +1,20 @@
 const request = require('supertest');
 const server = require('../server.js')('test_data', 'localhost');
 
-describe("Test API and database", () => {
+beforeAll(async () => {
+    await server.initAdmin();
+});
+
+afterAll(async () => {
+    await server.drop();
+    server.close();
+});
+
+describe("Test GET / api", () => {
+    beforeEach(async () => {
+        await server.drop();
+    });
+
     test("processes GET empty", (done) => {
         request(server.app)
             .get('/api')
@@ -30,23 +43,34 @@ describe("Test API and database", () => {
             .expect(200, [testData]);
     });
 
-    test("passes POST with correct schema", (done) => {
-        request(server.app)
-            .post('/api/save')
-            .send({
-                firstName: "John",
-                lastName: "Smith",
-                favoritePet: "dog",
-                favoriteColor: "Blue",
-                message: "Hello, world!"
-            })
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(201, { msg: 'We received your data!' }, done);
+});
+
+describe("Test POST /save api", () => {
+    beforeEach(async () => {
+        await server.drop();
     });
 
-    test("pass POST with incorrect schema", (done) => {
-        request(server.app)
+    test("passes POST with correct schema", async () => {
+        const testInput = {
+            firstName: "John",
+            lastName: "Smith",
+            favoritePet: "dog",
+            favoriteColor: "Blue",
+            message: "Hello, world!"
+        };
+        
+        await request(server.app)
+            .post('/api/save')
+            .send(testInput)
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(201, { msg: 'We received your data!' });
+        
+        expect(await server.getAll()).toEqual([testInput]);
+    });
+
+    test("pass POST with incorrect schema", async () => {
+        await request(server.app)
             .post('/api/save')
             .send({
                 name: "Jane Doe",
@@ -56,31 +80,15 @@ describe("Test API and database", () => {
             })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
-            .expect(400, { msg: 'Failed to save your data.' }, done);
-    });
+            .expect(400, { msg: 'Failed to save your data.' });
 
-    test("attempt sign in with incorrect credentials", (done) => {
-        request(server.app)
-            .post('/api/admin/login')
-            .send({
-                username: "notAdmin",
-                password: "notAdmin"
-            })
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(404, done);
+        expect(await server.getAll()).toEqual([]);
     });
+});
 
-    test("attempt sign in with correct credentials", (done) => {
-        request(server.app)
-            .post('/api/admin/login')
-            .send({
-                username: "admin",
-                password: "admin"
-            })
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200, done);
+describe("Test GET /search/:id api", () => {
+    beforeEach(async () => {
+        await server.drop();
     });
 
     test("search mongodb data using id value", async () => {
@@ -102,17 +110,11 @@ describe("Test API and database", () => {
             .expect(200, testInput);
     });
 
-    beforeAll(async () => {
-        await server.initAdmin();
-    });
-
-
-    beforeEach(async () => {
-        await server.drop();
-    });
-
-    afterAll(async () => {
-        await server.drop();
-        server.close();
+    test("search mongodb data using invalid id", (done) => {
+        request(server.app)
+            .get('/api/search/69420')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(404, { message: "Invalid id, could not retrieve data from mongodb database." }, done);
     });
 });
