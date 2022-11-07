@@ -12,6 +12,6 @@ test('should render return to homepage link', () =>{
         </Router>);
     const returnButton = screen.getByTestId('return');
     expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toHaveTextContent('Return to home page');
+    expect(returnButton).toHaveTextContent('Return to Homepage');
     expect(returnButton).toContainHTML('</Link>');
 });
