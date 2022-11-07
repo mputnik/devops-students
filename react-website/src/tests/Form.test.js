@@ -1,56 +1,77 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, getByTestId } from "@testing-library/react";
 import { MemoryRouter as Router } from 'react-router-dom';
-import Form from '../pages/Form'
+import UserForm from '../pages/UserForm'
 
-afterEach(()=>{
+afterEach(() => {
     cleanup();
 })
 
-test('should render first name input', () =>{
+test('should render first name input field with required label', () => {
     render(<Router>
-        <Form/>
+        <UserForm/>
     </Router>);
-    const returnButton = screen.getByTestId('FnameInput');
-    expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toContainHTML('</input>');
+    const parentElement = screen.getByTestId('FnameInput');
+    const label = screen.getByTestId('FnameLabel');
+
+    expect(parentElement).toBeInTheDocument();
+    expect(parentElement).toContainElement(label);
+
+    expect(label).toHaveClass('required');
 });
 
-test('should render last name input', () =>{
+test('should render last name input field with required label', () => {
     render(<Router>
-        <Form/>
+        <UserForm/>
     </Router>);
-    const returnButton = screen.getByTestId('LnameInput');
-    expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toContainHTML('</input>');
+    const parentElement = screen.getByTestId('LnameInput');
+    const label = screen.getByTestId('LnameLabel');
+
+    expect(parentElement).toBeInTheDocument();
+    expect(parentElement).toContainElement(label);
+
+    expect(label).toHaveClass('required');
 });
 
-
-test('should render colour input', () =>{
+test('should render colour input field with required label', () =>{
     render(<Router>
-        <Form/>
+        <UserForm/>
     </Router>);
-    const returnButton = screen.getByTestId('ColourInput');
-    expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toContainHTML('</input>');
+    const parentElement = screen.getByTestId('ColourInput');
+    const label = screen.getByTestId('ColourLabel');
+
+    expect(parentElement).toBeInTheDocument();
+    expect(parentElement).toContainElement(label);
+
+    expect(label).toHaveClass('required');
 });
 
-test('should render pet select', () =>{
+test('should render pet drop-down menu with required label', () =>{
     render(<Router>
-        <Form/>
+        <UserForm/>
     </Router>);
-    const returnButton = screen.getByTestId('PetSelect');
-    expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toContainHTML('</select>');
+    const parentElement = screen.getByTestId('PetSelect');
+    const label = screen.getByTestId('PetLabel');
+
+    expect(parentElement).toBeInTheDocument();
+    expect(parentElement).toContainElement(label);
+
+    expect(label).toHaveClass('required');
+});
+
+test('should render message box', () =>{
+    render(<Router>
+        <UserForm/>
+    </Router>);
+    const msgBox = screen.getByTestId('msgBox');
+    expect(msgBox).toBeInTheDocument();
 });
 
 test('should render submit button', () =>{
     render(<Router>
-        <Form/>
+        <UserForm/>
     </Router>);
-    const returnButton = screen.getByTestId('SubmitBtn');
-    expect(returnButton).toBeInTheDocument();
-    expect(returnButton).toContainHTML('</button>');
+    const submitButton = screen.getByTestId('SubmitBtn');
+    expect(submitButton).toBeInTheDocument();
+    expect(submitButton).toHaveTextContent('Submit');
+    expect(submitButton).toHaveClass('btn btn-default');
 });
-
-
-

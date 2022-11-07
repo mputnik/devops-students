@@ -66,7 +66,7 @@ function UserForm () {
                 colourErr={colourErr}
                 petErr={petErr}
             >
-                <button type="submit" className="btn btn-default">Submit</button>
+                <button data-testid={'SubmitBtn'} type="submit" className="btn btn-default">Submit</button>
             </FormBase>
         </>
     )
