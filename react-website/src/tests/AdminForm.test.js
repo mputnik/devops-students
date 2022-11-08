@@ -10,6 +10,7 @@ afterEach(()=>{
 })
 
 test('should render Save Changes button', () => {
+    window.alert = jest.fn();
     render(<Router>
             <AdminForm/>
         </Router>);
@@ -17,9 +18,11 @@ test('should render Save Changes button', () => {
     expect(saveButton).toBeInTheDocument();
     expect(saveButton).toHaveTextContent('Save Changes');
     expect(saveButton).toHaveClass('btn btn-default');
+    window.alert.mockClear();
 });
 
 test('should render Delete button', () => {
+    window.alert = jest.fn();
     render(<Router>
             <AdminForm/>
         </Router>);
@@ -27,4 +30,5 @@ test('should render Delete button', () => {
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveTextContent('Delete');
     expect(deleteButton).toHaveClass('btn btn-danger');
+    window.alert.mockClear();
 });
