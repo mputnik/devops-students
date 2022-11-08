@@ -1,4 +1,4 @@
-module.exports = function(dbName) {
+module.exports = function(dbName,address) {
     let server = {};
 
     // Import npm packages
@@ -16,7 +16,7 @@ module.exports = function(dbName) {
     const routes = require('./routes/api');
 
     // Establish connection to mongodb database
-    mongoose.connect(`mongodb://database:27017/${dbName}`, {
+    mongoose.connect(`mongodb://${address}:27017/${dbName}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
@@ -42,14 +42,30 @@ module.exports = function(dbName) {
     server.app = app;
 
     // Functions for testing purposes.
-    server.add = function (data) {
+    server.add = async function (data) {
         const newData = new FormPost(data);
-        newData.save((err) => {
-            if (err) {
-                console.error(`Could not save data to mongodb.\nError: ${err}`);
-            }
+        let savedId;
+        await newData.save().then(savedDoc => {
+            savedId = savedDoc._id.toString();
         });
+        return savedId;
     };
+
+    server.getAll = async function () {
+        let data;
+        await FormPost.find({}).then(rawData => {
+            data = rawData.map((obj) => ({
+                firstName: obj.firstName,
+                lastName: obj.lastName,
+                favoritePet: obj.favoritePet,
+                favoriteColor: obj.favoriteColor,
+                message: obj.message
+            }));
+            return;
+        });
+
+        return data;
+    }
 
     server.drop = async function() {
         await FormPost.deleteMany();

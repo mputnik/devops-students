@@ -31,10 +31,10 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 /**
  * @swagger
  *  tags:
- *      name: - admin
- *          description: Admin api calls 
- *      name: - table
- *          description: Table api calls
+ *      - name: admin
+ *        description: Admin api calls 
+ *      - name: table
+ *        description: Table api calls
  */
 
 /** 
@@ -43,13 +43,9 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *      schemas:
  *          retrieve: 
  *              type: object
- *              require:
- *              - firstName
- *              - lastName
- *              - favoritePet
- *              - favoriteColor
- *              - _id
  *              properties:
+ *                  _id:
+ *                      type: string
  *                  firstName: 
  *                      type: string
  *                  lastName:
@@ -60,14 +56,8 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *                      type: string
  *                  message:
  *                      type: string
- *                  _id:
- *                      type: string
-*/
-
-/** 
- * @swagger
- *  components:
- *      schemas:
+ *                  __v:
+ *                      type: integer
  *          save: 
  *              type: object
  *              require:
@@ -105,7 +95,7 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *                          type: array
  *                          items:
  *                              $ref: '#/components/schemas/retrieve'
- *          '404':
+ *          '500':
  *              description: Could not retrieve data from mongodb database
  */
 
@@ -114,19 +104,11 @@ router.get('/', (req, res) =>{
     FormPost.find({})
         .then((rawData) => {
             console.log('data retrieved');
-            let data = rawData.map((obj) => ({
-                firstName: obj.firstName,
-                lastName: obj.lastName,
-                favoritePet: obj.favoritePet,
-                favoriteColor: obj.favoriteColor,
-                message: obj.message,
-                _id: obj._id
-            }));
-
-            res.status(200).json(data)
+            res.status(200).json(rawData);
         })
         .catch((error) =>{
             console.log('Could not retrieve data from mongodb database.');
+            res.status(500).json({ message: `Internal unexpected server error.\nError: ${error.message}` });
         });
 })
 
@@ -187,7 +169,7 @@ router.post('/save', (req, res) =>{
  *      responses:
  *          200: 
  *              description: Data successfuly retreived
- *          400:
+ *          404:
  *              description: Could not retrieve data from mongodb database
  */
 
@@ -201,6 +183,7 @@ router.get('/search/:id', (req, res) => {
         })
         .catch((error) =>{
             console.log(`Could not retrieve data from mongodb database.\n${error.message})`);
+            res.status(404).json({ message: "Invalid id, could not retrieve data from mongodb database." });
         });
 })
 
@@ -219,7 +202,7 @@ router.get('/search/:id', (req, res) => {
  *            schema:
  *              type: string
  *      responses:
- *          201: 
+ *          200: 
  *              description: Data successfuly deleted from mongodb database
  *          401:
  *              description: Token missing or invalid
@@ -242,7 +225,7 @@ router.delete('/admin/delete/:id', (req, res) =>{
             FormPost.findByIdAndDelete(`${id}`)
                 .then((rawData) => {
                     console.log(rawData);
-                    res.status(201).json({ message: `id ${id} data successfuly deleted from to mongodb database` });
+                    res.status(200).json({ message: `id ${id} data successfuly deleted from to mongodb database` });
                 })
                 .catch((error) =>{
                     res.status(404).json({ message: `Query failed. Could not delete data from mongodb database.\nError: ${error}` });
@@ -290,7 +273,7 @@ router.put('/admin/edit/:id', (req, res) => {
                                         favoritePet: newdata.favoritePet,favoriteColor: newdata.favoriteColor,
                                         message: newdata.message}}, {new: true})
                 .then(() => {
-                    res.status(200).json({ message: `id ${id} data successfuly updated` });
+                    res.status(201).json({ message: `id ${id} data successfuly updated` });
                 })
                 .catch((error) => {
                     res.status(404).json({ message: `Could not update data.\nError: ${error}` });
@@ -312,7 +295,7 @@ router.put('/admin/edit/:id', (req, res) => {
  *          - admin
  *      description: This api is used to sign in as an admin. 
  *      responses:
- *          201: 
+ *          200: 
  *              description: Login success.
  *          401:
  *              description: Login failed. Password incorrect.
@@ -336,7 +319,7 @@ router.post('/admin/login', (req, res) => {
 
                 const token = jwt.sign(userForToken,'secret',{expiresIn: '1h'})
                 
-                res.status(200).json({token})
+                res.status(200).json({token: token, message: "Login successful."})
 
             } else {
                 res.status(401).json({ message: "Login failed. Password incorrect." });
@@ -356,7 +339,7 @@ router.post('/admin/login', (req, res) => {
  *          - admin
  *      description: This api is used to check if a user is authorized
  *      responses:
- *          201: 
+ *          200: 
  *              description: User is authorized
  *          401:
  *              description: User is not authorzied (token missing or invalid)

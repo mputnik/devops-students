@@ -50,19 +50,19 @@ function AdminSignIn() {
         <>
             <form id='form' onSubmit={(e) => handleSubmit(e)} property="mainContentOfPage" className="container" resource="#wb-main" typeof="WebPageElement">
                 <h1>Enter Username & Password</h1>
-                <div data-testid={'UserInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="User">Username <strong className="required">(required)</strong></label>
+                <div data-testid={'adminUsername'} className="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label data-testid={'adminUsernameLabel'} className="control-label required" htmlFor="User">Username <strong className="required">(required)</strong></label>
                     {userErr && <ErrorMsg htmlFor="User"/>}
                     <input type="text" className="form-control" id="User" size="40" placeholder="" value={user} onChange={(e) => setUser(e.target.value)}/>
                 </div>
-                <div data-testid={'PasswordInput'} className="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label className="control-label required" htmlFor="Password">Password <strong className="required">(required)</strong></label>
+                <div data-testid={'adminPass'} className="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label data-testid={'adminPassLabel'} className="control-label required" htmlFor="Password">Password <strong className="required">(required)</strong></label>
                     {passwordErr && <ErrorMsg htmlFor="Password"/>}
                     <input type="password" className="form-control" id="Password" size="40" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <div data-testid={'SubmitBtn'} className="form-group col-lg-12 col-md-12 col-sm-12">
+                <div className="form-group col-lg-12 col-md-12 col-sm-12">
                     <br></br>
-                    <button type="submit" className="btn btn-default">Sign In </button>
+                    <button data-testid={'SignInBtn'} type="submit" className="btn btn-default">Sign In </button>
                 </div>
                 <div>{loginFailedErr && <LoginFailedMsg htmlFor="LoginFailed"/>}</div>
             </form>

@@ -122,9 +122,9 @@ function AdminForm (props) {
                 colourErr={colourErr}
                 petErr={petErr}
             >
-                <button type="button" className="btn btn-default" onClick={() => editDocument()}>Save Changes</button>
+                <button data-testid="saveChanges" type="button" className="btn btn-default" onClick={() => editDocument()}>Save Changes</button>
                 <span>{/* For spacing */}  </span>
-                <button type="button" className="btn btn-danger" onClick={() => deleteDocument()}>Delete</button>
+                <button data-testid="delete" type="button" className="btn btn-danger" onClick={() => deleteDocument()}>Delete</button>
             </FormBase>
         </>
     )
