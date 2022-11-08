@@ -4,9 +4,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "feature/github-actions" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "feature/github-actions" ]
+    branches: [ "main" ]
 
 jobs:
   #backend
@@ -47,4 +47,3 @@ jobs:
 
     - run: npm test
       working-directory: /home/runner/work/devops-students/devops-students/react-website
-
