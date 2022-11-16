@@ -18,4 +18,5 @@ module "react-website" {
 module "proxy" {
   source = "./proxy"
   dnet_name = docker_network.dnet.name
+  depends_on = [module.react-website.out, module.server.out]
 }

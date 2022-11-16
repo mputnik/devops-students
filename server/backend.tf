@@ -3,7 +3,7 @@ resource "docker_image" "api" {
   name = "api"
 
   build {
-    path = "/server"
+    path = "./server"
     dockerfile = "Dockerfile"
   }
 }
@@ -16,4 +16,13 @@ resource "docker_container" "api" {
   networks_advanced {
     name = var.dnet_name   
   }
+
+  depends_on = [
+    docker_container.mongodb
+  ]
+}
+
+output "out" {
+  value       = {}
+  depends_on  = [docker_container.api]
 }

@@ -35,3 +35,8 @@ resource "docker_container" "client" {
     type = "bind"
   }
 }
+
+output "out" {
+  value       = {}
+  depends_on  = [docker_container.client]
+}

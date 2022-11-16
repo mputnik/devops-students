@@ -3,7 +3,6 @@ terraform {
     docker = {
       source  = "kreuzwerker/docker"
       version = "2.23.0"
-      #docker network maybe goes here
     }
   }
 }
