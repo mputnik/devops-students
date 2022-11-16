@@ -1,7 +1,8 @@
 /node_modules
+/data
 Dockerfile
+*.tf
 /.terraform
-backend.tf
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
